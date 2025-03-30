@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_30_062546) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_30_095332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "grammars", force: :cascade do |t|
+    t.string "title", comment: "Title of the grammar (e.g, 'ために')"
+    t.string "slug", comment: "Slug of the grammar (e.g, 'ために-tameni')"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_grammars_on_slug", unique: true
+    t.index ["title"], name: "index_grammars_on_title", unique: true
+  end
+
+  create_table "kanjis", force: :cascade do |t|
+    t.string "title", comment: "Title of the kanji (e.g, '愛')"
+    t.string "slug", comment: "Slug of the kanji (e.g, '愛-ai')"
+    t.string "kunyomi_readings", default: [], comment: "Kunyomi readings of the kanji (e.g, ['あい'])", array: true
+    t.string "onyomi_readings", default: [], comment: "Onyomi readings of the kanji (e.g, ['あい'])", array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_kanjis_on_slug", unique: true
+    t.index ["title"], name: "index_kanjis_on_title", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
@@ -37,5 +57,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_30_062546) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
+  end
+
+  create_table "vocabularies", force: :cascade do |t|
+    t.string "title", comment: "Title of the vocabulary (e.g, '愛')"
+    t.string "slug", comment: "Slug of the vocabulary (e.g, '愛-ai')"
+    t.string "kana", comment: "Kana of the vocabulary (e.g, 'あい')"
+    t.string "types", default: [], comment: "Types of the vocabulary (e.g, ['t_noun'])", array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_vocabularies_on_slug", unique: true
+    t.index ["title"], name: "index_vocabularies_on_title", unique: true
   end
 end
