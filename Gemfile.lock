@@ -122,6 +122,11 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    globalize (7.0.0)
+      activemodel (>= 7.0, < 8.1)
+      activerecord (>= 7.0, < 8.1)
+      activesupport (>= 7.0, < 8.1)
+      request_store (~> 1.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     io-console (0.8.0)
@@ -248,6 +253,8 @@ GEM
     regexp_parser (2.10.0)
     reline (0.6.0)
       io-console (~> 0.5)
+    request_store (1.7.0)
+      rack (>= 1.4)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -337,6 +344,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   devise_token_auth (~> 1.2)
+  globalize (~> 7.0)
   kamal
   letter_opener
   pg (~> 1.1)

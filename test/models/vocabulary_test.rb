@@ -4,6 +4,7 @@
 #
 #  id                                               :bigint           not null, primary key
 #  kana(Kana of the vocabulary (e.g, 'あい'))       :string
+#  meanings(Meanings of the vocabulary)             :string           default(NULL), not null, is an Array
 #  slug(Slug of the vocabulary (e.g, '愛-ai'))      :string
 #  title(Title of the vocabulary (e.g, '愛'))       :string
 #  types(Types of the vocabulary (e.g, ['t_noun'])) :string           default([]), is an Array

@@ -53,3 +53,4 @@ end
 
 gem "devise_token_auth", "~> 1.2"
 gem "devise", "~> 4.9"
+gem "globalize", "~> 7.0"

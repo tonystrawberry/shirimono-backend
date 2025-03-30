@@ -4,6 +4,7 @@
 #
 #  id                                                              :bigint           not null, primary key
 #  kunyomi_readings(Kunyomi readings of the kanji (e.g, ['あい'])) :string           default([]), is an Array
+#  meanings(Meanings of the kanji)                                 :string           default(NULL), not null, is an Array
 #  onyomi_readings(Onyomi readings of the kanji (e.g, ['あい']))   :string           default([]), is an Array
 #  slug(Slug of the kanji (e.g, '愛-ai'))                          :string
 #  title(Title of the kanji (e.g, '愛'))                           :string

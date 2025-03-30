@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_30_095332) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_30_135607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "grammar_translations", force: :cascade do |t|
+    t.bigint "grammar_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "meanings", default: [], null: false, comment: "Meanings of the grammar", array: true
+    t.index ["grammar_id"], name: "index_grammar_translations_on_grammar_id"
+    t.index ["locale"], name: "index_grammar_translations_on_locale"
+  end
 
   create_table "grammars", force: :cascade do |t|
     t.string "title", comment: "Title of the grammar (e.g, 'ために')"
@@ -21,6 +31,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_30_095332) do
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_grammars_on_slug", unique: true
     t.index ["title"], name: "index_grammars_on_title", unique: true
+  end
+
+  create_table "kanji_translations", force: :cascade do |t|
+    t.bigint "kanji_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "meanings", default: [], null: false, comment: "Meanings of the kanji", array: true
+    t.index ["kanji_id"], name: "index_kanji_translations_on_kanji_id"
+    t.index ["locale"], name: "index_kanji_translations_on_locale"
   end
 
   create_table "kanjis", force: :cascade do |t|
@@ -68,5 +88,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_30_095332) do
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_vocabularies_on_slug", unique: true
     t.index ["title"], name: "index_vocabularies_on_title", unique: true
+  end
+
+  create_table "vocabulary_translations", force: :cascade do |t|
+    t.bigint "vocabulary_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "meanings", default: [], null: false, comment: "Meanings of the vocabulary", array: true
+    t.index ["locale"], name: "index_vocabulary_translations_on_locale"
+    t.index ["vocabulary_id"], name: "index_vocabulary_translations_on_vocabulary_id"
   end
 end
