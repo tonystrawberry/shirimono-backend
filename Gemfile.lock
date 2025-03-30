@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/tonystrawberry/annotaterb.git
+  revision: 4d9ba3f7f5e45411231658c551b78e284aaf96aa
+  specs:
+    annotaterb (4.14.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -325,6 +331,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  annotaterb!
   bootsnap
   brakeman
   debug

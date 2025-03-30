@@ -47,9 +47,9 @@ group :development, :test do
 end
 
 group :development do
+  gem "annotaterb", git: "https://github.com/tonystrawberry/annotaterb.git"
   gem "letter_opener"
 end
 
 gem "devise_token_auth", "~> 1.2"
-
 gem "devise", "~> 4.9"
