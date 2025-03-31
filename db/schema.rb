@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_30_141100) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_31_114753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -100,6 +100,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_30_141100) do
     t.index ["title"], name: "index_kanjis_on_title", unique: true
   end
 
+  create_table "user_reviews", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "User the review belongs to"
+    t.string "course_point_type", null: false
+    t.bigint "course_point_id", null: false, comment: "Course point that the review belongs to"
+    t.integer "memorization_status", default: 0, null: false, comment: "Memorization status of the user review"
+    t.integer "number_of_total_reviews", default: 0, null: false, comment: "Number of reviews the user has made on the course point"
+    t.integer "number_of_correct_reviews", default: 0, null: false, comment: "Number of correct reviews the user has made on the course point"
+    t.datetime "next_review_at", comment: "Next review date for the user review"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_point_type", "course_point_id"], name: "index_user_reviews_on_course_point"
+    t.index ["user_id"], name: "index_user_reviews_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -152,4 +166,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_30_141100) do
   add_foreign_key "course_kanjis", "kanjis"
   add_foreign_key "course_vocabularies", "courses"
   add_foreign_key "course_vocabularies", "vocabularies"
+  add_foreign_key "user_reviews", "users"
 end
