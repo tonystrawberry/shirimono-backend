@@ -18,4 +18,7 @@
 #
 class Kanji < ApplicationRecord
   translates :meanings
+
+  has_many :course_kanjis, dependent: :destroy
+  has_many :courses, through: :course_kanjis
 end

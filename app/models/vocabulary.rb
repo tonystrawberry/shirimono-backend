@@ -18,4 +18,7 @@
 #
 class Vocabulary < ApplicationRecord
   translates :meanings
+
+  has_many :course_vocabularies, dependent: :destroy
+  has_many :courses, through: :course_vocabularies
 end

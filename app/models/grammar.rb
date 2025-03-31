@@ -16,4 +16,7 @@
 #
 class Grammar < ApplicationRecord
   translates :meanings
+
+  has_many :course_grammars, dependent: :destroy
+  has_many :courses, through: :course_grammars
 end
