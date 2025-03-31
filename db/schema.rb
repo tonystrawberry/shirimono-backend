@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_31_114753) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_31_115958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -77,6 +77,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_114753) do
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_grammars_on_slug", unique: true
     t.index ["title"], name: "index_grammars_on_title", unique: true
+  end
+
+  create_table "kanji_pairs", force: :cascade do |t|
+    t.bigint "kanji_1_id", null: false, comment: "First kanji of the pair"
+    t.bigint "kanji_2_id", null: false, comment: "Second kanji of the pair"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kanji_1_id"], name: "index_kanji_pairs_on_kanji_1_id"
+    t.index ["kanji_2_id"], name: "index_kanji_pairs_on_kanji_2_id"
   end
 
   create_table "kanji_translations", force: :cascade do |t|
@@ -150,6 +159,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_114753) do
     t.index ["title"], name: "index_vocabularies_on_title", unique: true
   end
 
+  create_table "vocabulary_pairs", force: :cascade do |t|
+    t.bigint "vocabulary_1_id", null: false, comment: "First vocabulary of the pair"
+    t.bigint "vocabulary_2_id", null: false, comment: "Second vocabulary of the pair"
+    t.integer "type", default: 0, null: false, comment: "Type of the vocabulary pair (e.g, 0: synonym, 1: antonym)"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vocabulary_1_id"], name: "index_vocabulary_pairs_on_vocabulary_1_id"
+    t.index ["vocabulary_2_id"], name: "index_vocabulary_pairs_on_vocabulary_2_id"
+  end
+
   create_table "vocabulary_translations", force: :cascade do |t|
     t.bigint "vocabulary_id", null: false
     t.string "locale", null: false
@@ -166,5 +185,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_114753) do
   add_foreign_key "course_kanjis", "kanjis"
   add_foreign_key "course_vocabularies", "courses"
   add_foreign_key "course_vocabularies", "vocabularies"
+  add_foreign_key "kanji_pairs", "kanjis", column: "kanji_1_id"
+  add_foreign_key "kanji_pairs", "kanjis", column: "kanji_2_id"
   add_foreign_key "user_reviews", "users"
+  add_foreign_key "vocabulary_pairs", "vocabularies", column: "vocabulary_1_id"
+  add_foreign_key "vocabulary_pairs", "vocabularies", column: "vocabulary_2_id"
 end
