@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_31_115958) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_31_120235) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_115958) do
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_course_kanjis_on_course_id"
     t.index ["kanji_id"], name: "index_course_kanjis_on_kanji_id"
+  end
+
+  create_table "course_levels", force: :cascade do |t|
+    t.bigint "course_id", null: false, comment: "Course the level belongs to"
+    t.integer "level", null: false, comment: "Level of the course"
+    t.integer "point_type", default: 0, null: false, comment: "Type of the course point (e.g, 0: kanji, 1: vocabulary, 2: grammar)"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id", "level", "point_type"], name: "index_course_levels_on_course_id_and_level_and_point_type", unique: true
+    t.index ["course_id"], name: "index_course_levels_on_course_id"
   end
 
   create_table "course_translations", force: :cascade do |t|
@@ -183,6 +193,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_115958) do
   add_foreign_key "course_grammars", "grammars"
   add_foreign_key "course_kanjis", "courses"
   add_foreign_key "course_kanjis", "kanjis"
+  add_foreign_key "course_levels", "courses"
   add_foreign_key "course_vocabularies", "courses"
   add_foreign_key "course_vocabularies", "vocabularies"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_1_id"
