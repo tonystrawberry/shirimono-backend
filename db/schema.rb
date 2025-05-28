@@ -73,6 +73,54 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
     t.integer "vocabularies_count", default: 0, null: false, comment: "Number of vocabularies in the course"
   end
 
+  create_table "example_sentence_grammars", force: :cascade do |t|
+    t.bigint "example_sentence_id", null: false, comment: "Example sentence that contains the grammar"
+    t.bigint "grammar_id", null: false, comment: "Grammar that appears in the example sentence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["example_sentence_id", "grammar_id"], name: "index_example_sentence_grammars_unique", unique: true
+    t.index ["example_sentence_id"], name: "index_example_sentence_grammars_on_example_sentence_id"
+    t.index ["grammar_id"], name: "index_example_sentence_grammars_on_grammar_id"
+  end
+
+  create_table "example_sentence_kanjis", force: :cascade do |t|
+    t.bigint "example_sentence_id", null: false, comment: "Example sentence that contains the kanji"
+    t.bigint "kanji_id", null: false, comment: "Kanji that appears in the example sentence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["example_sentence_id", "kanji_id"], name: "index_example_sentence_kanjis_unique", unique: true
+    t.index ["example_sentence_id"], name: "index_example_sentence_kanjis_on_example_sentence_id"
+    t.index ["kanji_id"], name: "index_example_sentence_kanjis_on_kanji_id"
+  end
+
+  create_table "example_sentence_translations", force: :cascade do |t|
+    t.bigint "example_sentence_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "translation", null: false
+    t.index ["example_sentence_id"], name: "index_example_sentence_translations_on_example_sentence_id"
+    t.index ["locale"], name: "index_example_sentence_translations_on_locale"
+  end
+
+  create_table "example_sentence_vocabularies", force: :cascade do |t|
+    t.bigint "example_sentence_id", null: false, comment: "Example sentence that contains the vocabulary"
+    t.bigint "vocabulary_id", null: false, comment: "Vocabulary that appears in the example sentence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["example_sentence_id", "vocabulary_id"], name: "index_example_sentence_vocabularies_unique", unique: true
+    t.index ["example_sentence_id"], name: "index_example_sentence_vocabularies_on_example_sentence_id"
+    t.index ["vocabulary_id"], name: "index_example_sentence_vocabularies_on_vocabulary_id"
+  end
+
+  create_table "example_sentences", force: :cascade do |t|
+    t.string "sentence", null: false, comment: "The Japanese sentence"
+    t.string "sentence_html", null: false, comment: "The Japanese sentence with HTML ruby tags"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sentence"], name: "index_example_sentences_on_sentence", unique: true
+  end
+
   create_table "grammar_translations", force: :cascade do |t|
     t.bigint "grammar_id", null: false
     t.string "locale", null: false
@@ -211,6 +259,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
   add_foreign_key "course_levels", "courses"
   add_foreign_key "course_vocabularies", "courses"
   add_foreign_key "course_vocabularies", "vocabularies"
+  add_foreign_key "example_sentence_grammars", "example_sentences"
+  add_foreign_key "example_sentence_grammars", "grammars"
+  add_foreign_key "example_sentence_kanjis", "example_sentences"
+  add_foreign_key "example_sentence_kanjis", "kanjis"
+  add_foreign_key "example_sentence_vocabularies", "example_sentences"
+  add_foreign_key "example_sentence_vocabularies", "vocabularies"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_1_id"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_2_id"
   add_foreign_key "user_courses", "courses"
