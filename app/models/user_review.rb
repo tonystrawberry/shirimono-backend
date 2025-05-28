@@ -23,4 +23,36 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class UserReview < ApplicationRecord
+  belongs_to :user_course
+  belongs_to :course_point, polymorphic: true
+
+  delegate :user, to: :user_course
+
+  counter_culture :user_course,
+                 column_name: proc { |model| model.course_point_type == "CourseKanji" ? 'kanji_user_reviews_count' : nil },
+                 column_names: {
+                   ["course_point_type = ?", "CourseKanji"] => :kanji_user_reviews_count
+                 }
+
+  counter_culture :user_course,
+                 column_name: proc { |model| model.course_point_type == "CourseGrammar" ? 'grammar_user_reviews_count' : nil },
+                 column_names: {
+                   ["course_point_type = ?", "CourseGrammar"] => :grammar_user_reviews_count
+                 }
+
+  counter_culture :user_course,
+                 column_name: proc { |model| model.course_point_type == "CourseVocabulary" ? 'vocabulary_user_reviews_count' : nil },
+                 column_names: {
+                   ["course_point_type = ?", "CourseVocabulary"] => :vocabulary_user_reviews_count
+                 }
+
+  enum :memorization_status, {
+    level_0: 0,
+    level_1: 1,
+    level_2: 2,
+    level_3: 3,
+    level_4: 4,
+    level_5: 5,
+    level_6: 6,
+  }, prefix: true
 end

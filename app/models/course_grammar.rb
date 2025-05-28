@@ -22,4 +22,8 @@
 class CourseGrammar < ApplicationRecord
   belongs_to :course
   belongs_to :grammar
+
+  counter_culture :course,
+                 column_name: :grammars_count,
+                 touch: true
 end

@@ -38,4 +38,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
 
   include DeviseTokenAuth::Concerns::User
+
+  has_many :user_courses, dependent: :destroy
+  has_many :user_reviews, through: :user_courses
 end

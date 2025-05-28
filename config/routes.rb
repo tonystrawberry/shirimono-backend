@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get 'user', to: 'users#show'
+      resources :user_courses, only: [:index]
+      resources :courses, only: [:index]
+      resources :user_reviews, only: [:index]
     end
   end
 end

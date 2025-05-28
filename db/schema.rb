@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_31_120235) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,6 +68,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_120235) do
     t.string "slug", comment: "Slug of the course (e.g, 'n5')"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "kanjis_count", default: 0, null: false, comment: "Number of kanjis in the course"
+    t.integer "grammars_count", default: 0, null: false, comment: "Number of grammars in the course"
+    t.integer "vocabularies_count", default: 0, null: false, comment: "Number of vocabularies in the course"
   end
 
   create_table "grammar_translations", force: :cascade do |t|
@@ -119,8 +122,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_120235) do
     t.index ["title"], name: "index_kanjis_on_title", unique: true
   end
 
+  create_table "user_courses", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "User that the course belongs to"
+    t.bigint "course_id", null: false, comment: "Course that the user belongs to"
+    t.integer "kanji_user_reviews_count", default: 0, null: false, comment: "Number of kanji user reviews"
+    t.integer "vocabulary_user_reviews_count", default: 0, null: false, comment: "Number of vocabulary user reviews"
+    t.integer "grammar_user_reviews_count", default: 0, null: false, comment: "Number of grammar user reviews"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_user_courses_on_course_id"
+    t.index ["user_id"], name: "index_user_courses_on_user_id"
+  end
+
   create_table "user_reviews", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "User the review belongs to"
     t.string "course_point_type", null: false
     t.bigint "course_point_id", null: false, comment: "Course point that the review belongs to"
     t.integer "memorization_status", default: 0, null: false, comment: "Memorization status of the user review"
@@ -129,8 +143,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_120235) do
     t.datetime "next_review_at", comment: "Next review date for the user review"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_course_id", null: false, comment: "UserCourse that the review belongs to"
     t.index ["course_point_type", "course_point_id"], name: "index_user_reviews_on_course_point"
-    t.index ["user_id"], name: "index_user_reviews_on_user_id"
+    t.index ["user_course_id"], name: "index_user_reviews_on_user_course_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -198,7 +213,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_31_120235) do
   add_foreign_key "course_vocabularies", "vocabularies"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_1_id"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_2_id"
-  add_foreign_key "user_reviews", "users"
+  add_foreign_key "user_courses", "courses"
+  add_foreign_key "user_courses", "users"
+  add_foreign_key "user_reviews", "user_courses"
   add_foreign_key "vocabulary_pairs", "vocabularies", column: "vocabulary_1_id"
   add_foreign_key "vocabulary_pairs", "vocabularies", column: "vocabulary_2_id"
 end

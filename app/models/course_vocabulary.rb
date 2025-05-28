@@ -22,4 +22,8 @@
 class CourseVocabulary < ApplicationRecord
   belongs_to :course
   belongs_to :vocabulary
+
+  counter_culture :course,
+                 column_name: :vocabularies_count,
+                 touch: true
 end

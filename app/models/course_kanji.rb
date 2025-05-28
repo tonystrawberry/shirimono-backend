@@ -22,4 +22,8 @@
 class CourseKanji < ApplicationRecord
   belongs_to :course
   belongs_to :kanji
+
+  counter_culture :course,
+                 column_name: :kanjis_count,
+                 touch: true
 end
