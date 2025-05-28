@@ -170,6 +170,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
     t.index ["title"], name: "index_kanjis_on_title", unique: true
   end
 
+  create_table "point_of_the_days", force: :cascade do |t|
+    t.string "point_type", null: false
+    t.bigint "point_id", null: false
+    t.date "featured_on", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["featured_on"], name: "index_point_of_the_days_on_featured_on", unique: true
+    t.index ["point_type", "point_id"], name: "index_point_of_the_days_on_point"
+  end
+
   create_table "user_courses", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "User that the course belongs to"
     t.bigint "course_id", null: false, comment: "Course that the user belongs to"

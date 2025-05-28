@@ -13,6 +13,12 @@ Rails.application.routes.draw do
       resources :user_courses, only: [:index]
       resources :courses, only: [:index]
       resources :user_reviews, only: [:index]
+
+      resources :point_of_the_days, only: [] do
+        collection do
+          get :today
+        end
+      end
     end
   end
 end

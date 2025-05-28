@@ -21,4 +21,13 @@ class Kanji < ApplicationRecord
 
   has_many :course_kanjis, dependent: :destroy
   has_many :courses, through: :course_kanjis
+  has_many :example_sentence_kanjis, dependent: :destroy
+  has_many :example_sentences, through: :example_sentence_kanjis
+  has_many :point_of_the_days, as: :point, dependent: :destroy
+
+  validates :title, presence: true, uniqueness: true
+  validates :slug, presence: true, uniqueness: true
+  validates :kunyomi_readings, presence: true
+  validates :onyomi_readings, presence: true
+  validates :meanings, presence: true
 end

@@ -21,4 +21,13 @@ class Vocabulary < ApplicationRecord
 
   has_many :course_vocabularies, dependent: :destroy
   has_many :courses, through: :course_vocabularies
+  has_many :example_sentence_vocabularies, dependent: :destroy
+  has_many :example_sentences, through: :example_sentence_vocabularies
+  has_many :point_of_the_days, as: :point, dependent: :destroy
+
+  validates :title, presence: true
+  validates :slug, presence: true, uniqueness: true
+  validates :kana, presence: true
+  validates :meanings, presence: true
+  validates :types, presence: true
 end
