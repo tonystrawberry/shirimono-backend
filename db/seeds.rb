@@ -24,11 +24,37 @@ end
 # Sample N5 content
 n5 = courses[0] # N5
 
+# N5 Course Levels
+n5_kanji_level1 = CourseLevel.find_or_create_by!(course: n5, point_type: :kanji, position: 1) do |level|
+  level.title = "Basic Kanji 1"
+  level.description = "First set of basic kanji including numbers and everyday concepts"
+end
+
+n5_kanji_level2 = CourseLevel.find_or_create_by!(course: n5, point_type: :kanji, position: 2) do |level|
+  level.title = "Basic Kanji 2"
+  level.description = "Second set of basic kanji including common verbs and adjectives"
+end
+
+n5_vocab_level1 = CourseLevel.find_or_create_by!(course: n5, point_type: :vocabulary, position: 1) do |level|
+  level.title = "Essential Vocabulary 1"
+  level.description = "Basic pronouns and everyday nouns"
+end
+
+n5_vocab_level2 = CourseLevel.find_or_create_by!(course: n5, point_type: :vocabulary, position: 2) do |level|
+  level.title = "Essential Vocabulary 2"
+  level.description = "Common verbs and basic expressions"
+end
+
+n5_grammar_level1 = CourseLevel.find_or_create_by!(course: n5, point_type: :grammar, position: 1) do |level|
+  level.title = "Basic Grammar 1"
+  level.description = "Fundamental sentence structures and particles"
+end
+
 # N5 Kanji
 n5_kanjis = [
-  { title: "日", slug: "日-hi", kunyomi_readings: ["ひ", "び", "か"], onyomi_readings: ["ニチ", "ジツ"], meanings: ["day", "sun"] },
-  { title: "本", slug: "本-hon", kunyomi_readings: ["もと"], onyomi_readings: ["ホン"], meanings: ["book", "origin", "real"] },
-  { title: "人", slug: "人-jin", kunyomi_readings: ["ひと"], onyomi_readings: ["ジン", "ニン"], meanings: ["person", "people"] }
+  { title: "日", slug: "日-hi", kunyomi_readings: ["ひ", "び", "か"], onyomi_readings: ["ニチ", "ジツ"], meanings: ["day", "sun"], level: n5_kanji_level1 },
+  { title: "本", slug: "本-hon", kunyomi_readings: ["もと"], onyomi_readings: ["ホン"], meanings: ["book", "origin", "real"], level: n5_kanji_level1 },
+  { title: "人", slug: "人-jin", kunyomi_readings: ["ひと"], onyomi_readings: ["ジン", "ニン"], meanings: ["person", "people"], level: n5_kanji_level2 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -37,36 +63,30 @@ n5_kanjis = [
     k.meanings = data[:meanings]
   end
 
-  CourseKanji.find_or_create_by!(course: n5, kanji: kanji) do |ck|
-    ck.is_published = true
-  end
-
+  CourseLevelKanji.find_or_create_by!(course_level: data[:level], kanji: kanji)
   kanji
 end
 
 # N5 Grammar
 n5_grammars = [
-  { title: "です", slug: "です-desu", meanings: ["to be", "is"] },
-  { title: "ます", slug: "ます-masu", meanings: ["polite verb ending"] },
-  { title: "から", slug: "から-kara", meanings: ["because", "from"] }
+  { title: "です", slug: "です-desu", meanings: ["to be", "is"], level: n5_grammar_level1 },
+  { title: "ます", slug: "ます-masu", meanings: ["polite verb ending"], level: n5_grammar_level1 },
+  { title: "から", slug: "から-kara", meanings: ["because", "from"], level: n5_grammar_level1 }
 ].map do |data|
   grammar = Grammar.find_or_create_by!(slug: data[:slug]) do |g|
     g.title = data[:title]
     g.meanings = data[:meanings]
   end
 
-  CourseGrammar.find_or_create_by!(course: n5, grammar: grammar) do |cg|
-    cg.is_published = true
-  end
-
+  CourseLevelGrammar.find_or_create_by!(course_level: data[:level], grammar: grammar)
   grammar
 end
 
 # N5 Vocabulary
 n5_vocabularies = [
-  { title: "私", slug: "私-watashi", kana: "わたし", meanings: ["I", "me"], types: ["pronoun"] },
-  { title: "学生", slug: "学生-gakusei", kana: "がくせい", meanings: ["student"], types: ["noun"] },
-  { title: "先生", slug: "先生-sensei", kana: "せんせい", meanings: ["teacher", "instructor"], types: ["noun"] }
+  { title: "私", slug: "私-watashi", kana: "わたし", meanings: ["I", "me"], types: ["pronoun"], level: n5_vocab_level1 },
+  { title: "学生", slug: "学生-gakusei", kana: "がくせい", meanings: ["student"], types: ["noun"], level: n5_vocab_level1 },
+  { title: "先生", slug: "先生-sensei", kana: "せんせい", meanings: ["teacher", "instructor"], types: ["noun"], level: n5_vocab_level2 }
 ].map do |data|
   vocabulary = Vocabulary.find_or_create_by!(slug: data[:slug]) do |v|
     v.title = data[:title]
@@ -75,20 +95,33 @@ n5_vocabularies = [
     v.types = data[:types]
   end
 
-  CourseVocabulary.find_or_create_by!(course: n5, vocabulary: vocabulary) do |cv|
-    cv.is_published = true
-  end
-
+  CourseLevelVocabulary.find_or_create_by!(course_level: data[:level], vocabulary: vocabulary)
   vocabulary
 end
 
 # Sample N4 content
 n4 = courses[1] # N4
 
+# N4 Course Levels
+n4_kanji_level1 = CourseLevel.find_or_create_by!(course: n4, point_type: :kanji, position: 1) do |level|
+  level.title = "Intermediate Kanji 1"
+  level.description = "First set of intermediate kanji for N4"
+end
+
+n4_vocab_level1 = CourseLevel.find_or_create_by!(course: n4, point_type: :vocabulary, position: 1) do |level|
+  level.title = "Intermediate Vocabulary 1"
+  level.description = "Common compound words and expressions"
+end
+
+n4_grammar_level1 = CourseLevel.find_or_create_by!(course: n4, point_type: :grammar, position: 1) do |level|
+  level.title = "Intermediate Grammar 1"
+  level.description = "Advanced sentence patterns and expressions"
+end
+
 # N4 Kanji
 n4_kanjis = [
-  { title: "親", slug: "親-oya", kunyomi_readings: ["おや"], onyomi_readings: ["シン"], meanings: ["parent", "intimate"] },
-  { title: "切", slug: "切-kiri", kunyomi_readings: ["き"], onyomi_readings: ["セツ", "サイ"], meanings: ["cut", "crucial"] }
+  { title: "親", slug: "親-oya", kunyomi_readings: ["おや"], onyomi_readings: ["シン"], meanings: ["parent", "intimate"], level: n4_kanji_level1 },
+  { title: "切", slug: "切-kiri", kunyomi_readings: ["き"], onyomi_readings: ["セツ", "サイ"], meanings: ["cut", "crucial"], level: n4_kanji_level1 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -97,34 +130,28 @@ n4_kanjis = [
     k.meanings = data[:meanings]
   end
 
-  CourseKanji.find_or_create_by!(course: n4, kanji: kanji) do |ck|
-    ck.is_published = true
-  end
-
+  CourseLevelKanji.find_or_create_by!(course_level: data[:level], kanji: kanji)
   kanji
 end
 
 # N4 Grammar
 n4_grammars = [
-  { title: "そうです", slug: "そうです-soudesu", meanings: ["seems like", "appears to be"] },
-  { title: "てしまう", slug: "てしまう-teshimau", meanings: ["to finish completely", "to do something by accident"] }
+  { title: "そうです", slug: "そうです-soudesu", meanings: ["seems like", "appears to be"], level: n4_grammar_level1 },
+  { title: "てしまう", slug: "てしまう-teshimau", meanings: ["to finish completely", "to do something by accident"], level: n4_grammar_level1 }
 ].map do |data|
   grammar = Grammar.find_or_create_by!(slug: data[:slug]) do |g|
     g.title = data[:title]
     g.meanings = data[:meanings]
   end
 
-  CourseGrammar.find_or_create_by!(course: n4, grammar: grammar) do |cg|
-    cg.is_published = true
-  end
-
+  CourseLevelGrammar.find_or_create_by!(course_level: data[:level], grammar: grammar)
   grammar
 end
 
 # N4 Vocabulary
 n4_vocabularies = [
-  { title: "経験", slug: "経験-keiken", kana: "けいけん", meanings: ["experience"], types: ["noun"] },
-  { title: "結婚", slug: "結婚-kekkon", kana: "けっこん", meanings: ["marriage"], types: ["noun", "suru_verb"] }
+  { title: "経験", slug: "経験-keiken", kana: "けいけん", meanings: ["experience"], types: ["noun"], level: n4_vocab_level1 },
+  { title: "結婚", slug: "結婚-kekkon", kana: "けっこん", meanings: ["marriage"], types: ["noun", "suru_verb"], level: n4_vocab_level1 }
 ].map do |data|
   vocabulary = Vocabulary.find_or_create_by!(slug: data[:slug]) do |v|
     v.title = data[:title]
@@ -133,20 +160,33 @@ n4_vocabularies = [
     v.types = data[:types]
   end
 
-  CourseVocabulary.find_or_create_by!(course: n4, vocabulary: vocabulary) do |cv|
-    cv.is_published = true
-  end
-
+  CourseLevelVocabulary.find_or_create_by!(course_level: data[:level], vocabulary: vocabulary)
   vocabulary
 end
 
 # Sample N3 content
 n3 = courses[2] # N3
 
+# N3 Course Levels
+n3_kanji_level1 = CourseLevel.find_or_create_by!(course: n3, point_type: :kanji, position: 1) do |level|
+  level.title = "Advanced Kanji 1"
+  level.description = "First set of advanced kanji for N3"
+end
+
+n3_vocab_level1 = CourseLevel.find_or_create_by!(course: n3, point_type: :vocabulary, position: 1) do |level|
+  level.title = "Advanced Vocabulary 1"
+  level.description = "Advanced compound words and formal expressions"
+end
+
+n3_grammar_level1 = CourseLevel.find_or_create_by!(course: n3, point_type: :grammar, position: 1) do |level|
+  level.title = "Advanced Grammar 1"
+  level.description = "Complex sentence patterns and formal expressions"
+end
+
 # N3 Kanji
 n3_kanjis = [
-  { title: "織", slug: "織-ori", kunyomi_readings: ["お"], onyomi_readings: ["シキ"], meanings: ["weave", "fabric"] },
-  { title: "績", slug: "績-seki", kunyomi_readings: [], onyomi_readings: ["セキ"], meanings: ["performance", "results"] }
+  { title: "織", slug: "織-ori", kunyomi_readings: ["お"], onyomi_readings: ["シキ"], meanings: ["weave", "fabric"], level: n3_kanji_level1 },
+  { title: "績", slug: "績-seki", kunyomi_readings: ["せき"], onyomi_readings: ["セキ"], meanings: ["performance", "results"], level: n3_kanji_level1 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -155,34 +195,28 @@ n3_kanjis = [
     k.meanings = data[:meanings]
   end
 
-  CourseKanji.find_or_create_by!(course: n3, kanji: kanji) do |ck|
-    ck.is_published = true
-  end
-
+  CourseLevelKanji.find_or_create_by!(course_level: data[:level], kanji: kanji)
   kanji
 end
 
 # N3 Grammar
 n3_grammars = [
-  { title: "によって", slug: "によって-niyotte", meanings: ["by means of", "depending on"] },
-  { title: "わけがない", slug: "わけがない-wakegaai", meanings: ["there is no way that", "cannot possibly be"] }
+  { title: "によって", slug: "によって-niyotte", meanings: ["by means of", "depending on"], level: n3_grammar_level1 },
+  { title: "わけがない", slug: "わけがない-wakegaai", meanings: ["there is no way that", "cannot possibly be"], level: n3_grammar_level1 }
 ].map do |data|
   grammar = Grammar.find_or_create_by!(slug: data[:slug]) do |g|
     g.title = data[:title]
     g.meanings = data[:meanings]
   end
 
-  CourseGrammar.find_or_create_by!(course: n3, grammar: grammar) do |cg|
-    cg.is_published = true
-  end
-
+  CourseLevelGrammar.find_or_create_by!(course_level: data[:level], grammar: grammar)
   grammar
 end
 
 # N3 Vocabulary
 n3_vocabularies = [
-  { title: "解決", slug: "解決-kaiketsu", kana: "かいけつ", meanings: ["solution", "resolution"], types: ["noun", "suru_verb"] },
-  { title: "提案", slug: "提案-teian", kana: "ていあん", meanings: ["proposal", "suggestion"], types: ["noun", "suru_verb"] }
+  { title: "解決", slug: "解決-kaiketsu", kana: "かいけつ", meanings: ["solution", "resolution"], types: ["noun", "suru_verb"], level: n3_vocab_level1 },
+  { title: "提案", slug: "提案-teian", kana: "ていあん", meanings: ["proposal", "suggestion"], types: ["noun", "suru_verb"], level: n3_vocab_level1 }
 ].map do |data|
   vocabulary = Vocabulary.find_or_create_by!(slug: data[:slug]) do |v|
     v.title = data[:title]
@@ -191,20 +225,33 @@ n3_vocabularies = [
     v.types = data[:types]
   end
 
-  CourseVocabulary.find_or_create_by!(course: n3, vocabulary: vocabulary) do |cv|
-    cv.is_published = true
-  end
-
+  CourseLevelVocabulary.find_or_create_by!(course_level: data[:level], vocabulary: vocabulary)
   vocabulary
 end
 
 # Sample N2 content
 n2 = courses[3] # N2
 
+# N2 Course Levels
+n2_kanji_level1 = CourseLevel.find_or_create_by!(course: n2, point_type: :kanji, position: 1) do |level|
+  level.title = "Business Kanji 1"
+  level.description = "Advanced kanji commonly used in business and formal writing"
+end
+
+n2_vocab_level1 = CourseLevel.find_or_create_by!(course: n2, point_type: :vocabulary, position: 1) do |level|
+  level.title = "Business Vocabulary 1"
+  level.description = "Advanced vocabulary for professional contexts"
+end
+
+n2_grammar_level1 = CourseLevel.find_or_create_by!(course: n2, point_type: :grammar, position: 1) do |level|
+  level.title = "Advanced Grammar 1"
+  level.description = "Complex grammatical patterns for formal expression"
+end
+
 # N2 Kanji
 n2_kanjis = [
-  { title: "憂", slug: "憂-yu", kunyomi_readings: ["うれ"], onyomi_readings: ["ユウ"], meanings: ["worry", "anxiety"] },
-  { title: "謙", slug: "謙-ken", kunyomi_readings: [], onyomi_readings: ["ケン"], meanings: ["modesty", "humble"] }
+  { title: "憂", slug: "憂-yu", kunyomi_readings: ["うれ"], onyomi_readings: ["ユウ"], meanings: ["worry", "anxiety"], level: n2_kanji_level1 },
+  { title: "謙", slug: "謙-ken", kunyomi_readings: [], onyomi_readings: ["ケン"], meanings: ["modesty", "humble"], level: n2_kanji_level1 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -213,34 +260,28 @@ n2_kanjis = [
     k.meanings = data[:meanings]
   end
 
-  CourseKanji.find_or_create_by!(course: n2, kanji: kanji) do |ck|
-    ck.is_published = true
-  end
-
+  CourseLevelKanji.find_or_create_by!(course_level: data[:level], kanji: kanji)
   kanji
 end
 
 # N2 Grammar
 n2_grammars = [
-  { title: "にもかかわらず", slug: "にもかかわらず-nimokakawarazu", meanings: ["despite", "nevertheless"] },
-  { title: "つつある", slug: "つつある-tsutsuaru", meanings: ["in the process of", "while doing"] }
+  { title: "にもかかわらず", slug: "にもかかわらず-nimokakawarazu", meanings: ["despite", "nevertheless"], level: n2_grammar_level1 },
+  { title: "つつある", slug: "つつある-tsutsuaru", meanings: ["in the process of", "while doing"], level: n2_grammar_level1 }
 ].map do |data|
   grammar = Grammar.find_or_create_by!(slug: data[:slug]) do |g|
     g.title = data[:title]
     g.meanings = data[:meanings]
   end
 
-  CourseGrammar.find_or_create_by!(course: n2, grammar: grammar) do |cg|
-    cg.is_published = true
-  end
-
+  CourseLevelGrammar.find_or_create_by!(course_level: data[:level], grammar: grammar)
   grammar
 end
 
 # N2 Vocabulary
 n2_vocabularies = [
-  { title: "概念", slug: "概念-gainen", kana: "がいねん", meanings: ["concept", "notion"], types: ["noun"] },
-  { title: "傾向", slug: "傾向-keikou", kana: "けいこう", meanings: ["tendency", "trend"], types: ["noun"] }
+  { title: "概念", slug: "概念-gainen", kana: "がいねん", meanings: ["concept", "notion"], types: ["noun"], level: n2_vocab_level1 },
+  { title: "傾向", slug: "傾向-keikou", kana: "けいこう", meanings: ["tendency", "trend"], types: ["noun"], level: n2_vocab_level1 }
 ].map do |data|
   vocabulary = Vocabulary.find_or_create_by!(slug: data[:slug]) do |v|
     v.title = data[:title]
@@ -249,20 +290,33 @@ n2_vocabularies = [
     v.types = data[:types]
   end
 
-  CourseVocabulary.find_or_create_by!(course: n2, vocabulary: vocabulary) do |cv|
-    cv.is_published = true
-  end
-
+  CourseLevelVocabulary.find_or_create_by!(course_level: data[:level], vocabulary: vocabulary)
   vocabulary
 end
 
 # Sample N1 content
 n1 = courses[4] # N1
 
+# N1 Course Levels
+n1_kanji_level1 = CourseLevel.find_or_create_by!(course: n1, point_type: :kanji, position: 1) do |level|
+  level.title = "Literary Kanji 1"
+  level.description = "Advanced kanji used in literature and academic writing"
+end
+
+n1_vocab_level1 = CourseLevel.find_or_create_by!(course: n1, point_type: :vocabulary, position: 1) do |level|
+  level.title = "Academic Vocabulary 1"
+  level.description = "Sophisticated vocabulary for academic and literary contexts"
+end
+
+n1_grammar_level1 = CourseLevel.find_or_create_by!(course: n1, point_type: :grammar, position: 1) do |level|
+  level.title = "Expert Grammar 1"
+  level.description = "Complex and nuanced grammatical expressions"
+end
+
 # N1 Kanji
 n1_kanjis = [
-  { title: "憤", slug: "憤-fun", kunyomi_readings: ["いきどお"], onyomi_readings: ["フン"], meanings: ["resent", "indignation"] },
-  { title: "遵", slug: "遵-jun", kunyomi_readings: [], onyomi_readings: ["ジュン"], meanings: ["abide by", "follow"] }
+  { title: "憤", slug: "憤-fun", kunyomi_readings: ["いきどお"], onyomi_readings: ["フン"], meanings: ["resent", "indignation"], level: n1_kanji_level1 },
+  { title: "遵", slug: "遵-jun", kunyomi_readings: [], onyomi_readings: ["ジュン"], meanings: ["abide by", "follow"], level: n1_kanji_level1 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -271,34 +325,28 @@ n1_kanjis = [
     k.meanings = data[:meanings]
   end
 
-  CourseKanji.find_or_create_by!(course: n1, kanji: kanji) do |ck|
-    ck.is_published = true
-  end
-
+  CourseLevelKanji.find_or_create_by!(course_level: data[:level], kanji: kanji)
   kanji
 end
 
 # N1 Grammar
 n1_grammars = [
-  { title: "をもって", slug: "をもって-womotte", meanings: ["with", "by means of", "as of"] },
-  { title: "に至っては", slug: "に至っては-niitatte", meanings: ["as for", "when it comes to"] }
+  { title: "をもって", slug: "をもって-womotte", meanings: ["with", "by means of", "as of"], level: n1_grammar_level1 },
+  { title: "に至っては", slug: "に至っては-niitatte", meanings: ["as for", "when it comes to"], level: n1_grammar_level1 }
 ].map do |data|
   grammar = Grammar.find_or_create_by!(slug: data[:slug]) do |g|
     g.title = data[:title]
     g.meanings = data[:meanings]
   end
 
-  CourseGrammar.find_or_create_by!(course: n1, grammar: grammar) do |cg|
-    cg.is_published = true
-  end
-
+  CourseLevelGrammar.find_or_create_by!(course_level: data[:level], grammar: grammar)
   grammar
 end
 
 # N1 Vocabulary
 n1_vocabularies = [
-  { title: "措置", slug: "措置-sochi", kana: "そち", meanings: ["measure", "step"], types: ["noun", "suru_verb"] },
-  { title: "見解", slug: "見解-kenkai", kana: "けんかい", meanings: ["opinion", "point of view"], types: ["noun"] }
+  { title: "措置", slug: "措置-sochi", kana: "そち", meanings: ["measure", "step"], types: ["noun", "suru_verb"], level: n1_vocab_level1 },
+  { title: "見解", slug: "見解-kenkai", kana: "けんかい", meanings: ["opinion", "point of view"], types: ["noun"], level: n1_vocab_level1 }
 ].map do |data|
   vocabulary = Vocabulary.find_or_create_by!(slug: data[:slug]) do |v|
     v.title = data[:title]
@@ -307,10 +355,7 @@ n1_vocabularies = [
     v.types = data[:types]
   end
 
-  CourseVocabulary.find_or_create_by!(course: n1, vocabulary: vocabulary) do |cv|
-    cv.is_published = true
-  end
-
+  CourseLevelVocabulary.find_or_create_by!(course_level: data[:level], vocabulary: vocabulary)
   vocabulary
 end
 
@@ -332,48 +377,51 @@ users.each do |user|
   [n5, n4].each do |course|
     user_course = UserCourse.find_or_create_by!(user: user, course: course)
 
-    # Create some kanji reviews
-    course.course_kanjis.each do |course_kanji|
-      next if rand > 0.7 # 70% chance to create a review
+    # Create reviews for each course level
+    course.course_levels.each do |level|
+      # Create kanji reviews
+      level.kanjis.each do |kanji|
+        next if rand > 0.7 # 70% chance to create a review
 
-      UserReview.find_or_create_by!(
-        user_course: user_course,
-        course_point: course_kanji
-      ) do |review|
-        review.memorization_status = rand(0..6)
-        review.number_of_total_reviews = rand(1..10)
-        review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
-        review.next_review_at = Time.current + rand(1..7).days
+        UserReview.find_or_create_by!(
+          user_course: user_course,
+          course_point: level.course_level_kanjis.find_by(kanji: kanji)
+        ) do |review|
+          review.memorization_status = rand(0..6)
+          review.number_of_total_reviews = rand(1..10)
+          review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
+          review.next_review_at = Time.current + rand(1..7).days
+        end
       end
-    end
 
-    # Create some grammar reviews
-    course.course_grammars.each do |course_grammar|
-      next if rand > 0.7 # 70% chance to create a review
+      # Create grammar reviews
+      level.grammars.each do |grammar|
+        next if rand > 0.7 # 70% chance to create a review
 
-      UserReview.find_or_create_by!(
-        user_course: user_course,
-        course_point: course_grammar
-      ) do |review|
-        review.memorization_status = rand(0..6)
-        review.number_of_total_reviews = rand(1..10)
-        review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
-        review.next_review_at = Time.current + rand(1..7).days
+        UserReview.find_or_create_by!(
+          user_course: user_course,
+          course_point: level.course_level_grammars.find_by(grammar: grammar)
+        ) do |review|
+          review.memorization_status = rand(0..6)
+          review.number_of_total_reviews = rand(1..10)
+          review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
+          review.next_review_at = Time.current + rand(1..7).days
+        end
       end
-    end
 
-    # Create some vocabulary reviews
-    course.course_vocabularies.each do |course_vocabulary|
-      next if rand > 0.7 # 70% chance to create a review
+      # Create vocabulary reviews
+      level.vocabularies.each do |vocabulary|
+        next if rand > 0.7 # 70% chance to create a review
 
-      UserReview.find_or_create_by!(
-        user_course: user_course,
-        course_point: course_vocabulary
-      ) do |review|
-        review.memorization_status = rand(0..6)
-        review.number_of_total_reviews = rand(1..10)
-        review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
-        review.next_review_at = Time.current + rand(1..7).days
+        UserReview.find_or_create_by!(
+          user_course: user_course,
+          course_point: level.course_level_vocabularies.find_by(vocabulary: vocabulary)
+        ) do |review|
+          review.memorization_status = rand(0..6)
+          review.number_of_total_reviews = rand(1..10)
+          review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
+          review.next_review_at = Time.current + rand(1..7).days
+        end
       end
     end
   end

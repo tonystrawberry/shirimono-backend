@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'user', to: 'users#show'
       resources :user_courses, only: [:index]
-      resources :courses, only: [:index]
+      resources :courses, only: [:index, :show]
       resources :user_reviews, only: [:index]
 
       resources :point_of_the_days, only: [] do

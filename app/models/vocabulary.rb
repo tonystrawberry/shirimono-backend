@@ -19,8 +19,10 @@
 class Vocabulary < ApplicationRecord
   translates :meanings
 
-  has_many :course_vocabularies, dependent: :destroy
-  has_many :courses, through: :course_vocabularies
+  has_many :course_level_vocabularies, dependent: :destroy
+  has_many :course_levels, through: :course_level_vocabularies
+  has_many :courses, through: :course_levels
+
   has_many :example_sentence_vocabularies, dependent: :destroy
   has_many :example_sentences, through: :example_sentence_vocabularies
   has_many :point_of_the_days, as: :point, dependent: :destroy

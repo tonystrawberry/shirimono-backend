@@ -14,33 +14,59 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "course_grammars", force: :cascade do |t|
-    t.bigint "course_id", null: false, comment: "Course that the grammar belongs to"
+  create_table "course_level_grammars", force: :cascade do |t|
     t.bigint "grammar_id", null: false, comment: "Grammar that belongs to the course"
     t.boolean "is_published", default: false, null: false, comment: "Whether the grammar is published or not"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_course_grammars_on_course_id"
-    t.index ["grammar_id"], name: "index_course_grammars_on_grammar_id"
+    t.bigint "course_level_id", null: false
+    t.index ["course_level_id", "grammar_id"], name: "index_course_level_grammars_unique", unique: true
+    t.index ["course_level_id"], name: "index_course_level_grammars_on_course_level_id"
+    t.index ["grammar_id"], name: "index_course_level_grammars_on_grammar_id"
   end
 
-  create_table "course_kanjis", force: :cascade do |t|
-    t.bigint "course_id", null: false, comment: "Course that the kanji belongs to"
+  create_table "course_level_kanjis", force: :cascade do |t|
     t.bigint "kanji_id", null: false, comment: "Kanji that belongs to the course"
     t.boolean "is_published", default: false, null: false, comment: "Whether the kanji is published or not"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_course_kanjis_on_course_id"
-    t.index ["kanji_id"], name: "index_course_kanjis_on_kanji_id"
+    t.bigint "course_level_id", null: false
+    t.index ["course_level_id", "kanji_id"], name: "index_course_level_kanjis_unique", unique: true
+    t.index ["course_level_id"], name: "index_course_level_kanjis_on_course_level_id"
+    t.index ["kanji_id"], name: "index_course_level_kanjis_on_kanji_id"
+  end
+
+  create_table "course_level_translations", force: :cascade do |t|
+    t.bigint "course_level_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title", null: false, comment: "Title of the level"
+    t.text "description", comment: "Description of the level"
+    t.index ["course_level_id"], name: "index_course_level_translations_on_course_level_id"
+    t.index ["locale"], name: "index_course_level_translations_on_locale"
+  end
+
+  create_table "course_level_vocabularies", force: :cascade do |t|
+    t.bigint "vocabulary_id", null: false, comment: "Vocabulary that belongs to the course"
+    t.boolean "is_published", default: false, null: false, comment: "Whether the vocabulary is published or not"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "course_level_id", null: false
+    t.index ["course_level_id", "vocabulary_id"], name: "index_course_level_vocabularies_unique", unique: true
+    t.index ["course_level_id"], name: "index_course_level_vocabularies_on_course_level_id"
+    t.index ["vocabulary_id"], name: "index_course_level_vocabularies_on_vocabulary_id"
   end
 
   create_table "course_levels", force: :cascade do |t|
     t.bigint "course_id", null: false, comment: "Course the level belongs to"
-    t.integer "level", null: false, comment: "Level of the course"
-    t.integer "point_type", default: 0, null: false, comment: "Type of the course point (e.g, 0: kanji, 1: vocabulary, 2: grammar)"
+    t.integer "position", null: false, comment: "Position of the level in the course"
+    t.integer "point_type", default: 0, null: false, comment: "Type of the course points in the level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id", "level", "point_type"], name: "index_course_levels_on_course_id_and_level_and_point_type", unique: true
+    t.integer "course_points_count", default: 0, null: false, comment: "Number of course points in the level"
+    t.index ["course_id", "point_type", "position"], name: "index_course_levels_on_course_point_type_and_position", unique: true
+    t.index ["course_id", "position", "point_type"], name: "index_course_levels_on_course_id_and_position_and_point_type", unique: true
     t.index ["course_id"], name: "index_course_levels_on_course_id"
   end
 
@@ -52,16 +78,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
     t.string "title", comment: "Title of the course (e.g. 'JLPT N5')"
     t.index ["course_id"], name: "index_course_translations_on_course_id"
     t.index ["locale"], name: "index_course_translations_on_locale"
-  end
-
-  create_table "course_vocabularies", force: :cascade do |t|
-    t.bigint "course_id", null: false, comment: "Course that the vocabulary belongs to"
-    t.bigint "vocabulary_id", null: false, comment: "Vocabulary that belongs to the course"
-    t.boolean "is_published", default: false, null: false, comment: "Whether the vocabulary is published or not"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_course_vocabularies_on_course_id"
-    t.index ["vocabulary_id"], name: "index_course_vocabularies_on_vocabulary_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -262,13 +278,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
     t.index ["vocabulary_id"], name: "index_vocabulary_translations_on_vocabulary_id"
   end
 
-  add_foreign_key "course_grammars", "courses"
-  add_foreign_key "course_grammars", "grammars"
-  add_foreign_key "course_kanjis", "courses"
-  add_foreign_key "course_kanjis", "kanjis"
+  add_foreign_key "course_level_grammars", "course_levels"
+  add_foreign_key "course_level_grammars", "grammars"
+  add_foreign_key "course_level_kanjis", "course_levels"
+  add_foreign_key "course_level_kanjis", "kanjis"
+  add_foreign_key "course_level_vocabularies", "course_levels"
+  add_foreign_key "course_level_vocabularies", "vocabularies"
   add_foreign_key "course_levels", "courses"
-  add_foreign_key "course_vocabularies", "courses"
-  add_foreign_key "course_vocabularies", "vocabularies"
   add_foreign_key "example_sentence_grammars", "example_sentences"
   add_foreign_key "example_sentence_grammars", "grammars"
   add_foreign_key "example_sentence_kanjis", "example_sentences"

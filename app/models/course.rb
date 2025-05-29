@@ -14,12 +14,20 @@
 class Course < ApplicationRecord
   translates :title
 
-  has_many :course_kanjis, dependent: :destroy
-  has_many :kanjis, through: :course_kanjis
+  has_many :course_levels, dependent: :destroy
+  has_many :user_courses, dependent: :destroy
+  has_many :users, through: :user_courses
 
-  has_many :course_grammars, dependent: :destroy
-  has_many :grammars, through: :course_grammars
+  # Access points through course levels
+  has_many :course_level_kanjis, through: :course_levels
+  has_many :kanjis, through: :course_level_kanjis
 
-  has_many :course_vocabularies, dependent: :destroy
-  has_many :vocabularies, through: :course_vocabularies
+  has_many :course_level_vocabularies, through: :course_levels
+  has_many :vocabularies, through: :course_level_vocabularies
+
+  has_many :course_level_grammars, through: :course_levels
+  has_many :grammars, through: :course_level_grammars
+
+  validates :title, presence: true
+  validates :slug, presence: true, uniqueness: true
 end

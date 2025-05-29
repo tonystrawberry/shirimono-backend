@@ -17,8 +17,10 @@
 class Grammar < ApplicationRecord
   translates :meanings
 
-  has_many :course_grammars, dependent: :destroy
-  has_many :courses, through: :course_grammars
+  has_many :course_level_grammars, dependent: :destroy
+  has_many :course_levels, through: :course_level_grammars
+  has_many :courses, through: :course_levels
+
   has_many :example_sentence_grammars, dependent: :destroy
   has_many :example_sentences, through: :example_sentence_grammars
   has_many :point_of_the_days, as: :point, dependent: :destroy
