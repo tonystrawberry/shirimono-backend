@@ -1,37 +1,24 @@
 json.course do
-  json.extract! @course, :id, :slug
+  json.id @course.id
   json.title @course.title
+  json.slug @course.slug
+  json.course_level_kanjis_count @course.course_levels.where(point_type: :kanji).count
+  json.course_level_vocabularies_count @course.course_levels.where(point_type: :vocabulary).count
+  json.course_level_grammars_count @course.course_levels.where(point_type: :grammar).count
 
   json.levels @levels do |level|
-    json.extract! level, :id, :position
+    json.id level.id
     json.title level.title
     json.description level.description
+    json.position level.position
 
-    json.points case level.point_type.to_sym
+    json.points case params[:point_type].to_sym
                 when :kanji
-                  level.kanjis.map do |kanji|
-                    {
-                      id: kanji.id,
-                      title: kanji.title,
-                      meaning: kanji.meaning
-                    }
-                  end
+                  level.kanjis.map { |k| { id: k.id, title: k.title, meanings: k.meanings } }
                 when :vocabulary
-                  level.vocabularies.map do |vocabulary|
-                    {
-                      id: vocabulary.id,
-                      title: vocabulary.title,
-                      meaning: vocabulary.meaning
-                    }
-                  end
+                  level.vocabularies.map { |v| { id: v.id, title: v.title, meanings: v.meanings } }
                 when :grammar
-                  level.grammars.map do |grammar|
-                    {
-                      id: grammar.id,
-                      title: grammar.title,
-                      meaning: grammar.meaning
-                    }
-                  end
+                  level.grammars.map { |g| { id: g.id, title: g.title, meanings: g.meanings } }
                 end
   end
 end

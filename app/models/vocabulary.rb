@@ -27,9 +27,30 @@ class Vocabulary < ApplicationRecord
   has_many :example_sentences, through: :example_sentence_vocabularies
   has_many :point_of_the_days, as: :point, dependent: :destroy
 
+  # Vocabulary pairs
+  has_many :vocabulary_pairs_as_vocabulary_1, class_name: 'VocabularyPair', foreign_key: :vocabulary_1_id, dependent: :destroy
+  has_many :vocabulary_pairs_as_vocabulary_2, class_name: 'VocabularyPair', foreign_key: :vocabulary_2_id, dependent: :destroy
+  has_many :synonym_pairs_as_vocabulary_1, -> { where(pair_type: :synonym) }, class_name: 'VocabularyPair', foreign_key: :vocabulary_1_id
+  has_many :synonym_pairs_as_vocabulary_2, -> { where(pair_type: :synonym) }, class_name: 'VocabularyPair', foreign_key: :vocabulary_2_id
+  has_many :antonym_pairs_as_vocabulary_1, -> { where(pair_type: :antonym) }, class_name: 'VocabularyPair', foreign_key: :vocabulary_1_id
+  has_many :antonym_pairs_as_vocabulary_2, -> { where(pair_type: :antonym) }, class_name: 'VocabularyPair', foreign_key: :vocabulary_2_id
+
+  has_many :synonyms_as_vocabulary_1, through: :synonym_pairs_as_vocabulary_1, source: :vocabulary_2
+  has_many :synonyms_as_vocabulary_2, through: :synonym_pairs_as_vocabulary_2, source: :vocabulary_1
+  has_many :antonyms_as_vocabulary_1, through: :antonym_pairs_as_vocabulary_1, source: :vocabulary_2
+  has_many :antonyms_as_vocabulary_2, through: :antonym_pairs_as_vocabulary_2, source: :vocabulary_1
+
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :kana, presence: true
   validates :meanings, presence: true
   validates :types, presence: true
+
+  def synonyms
+    Vocabulary.where(id: synonyms_as_vocabulary_1.pluck(:id) + synonyms_as_vocabulary_2.pluck(:id))
+  end
+
+  def antonyms
+    Vocabulary.where(id: antonyms_as_vocabulary_1.pluck(:id) + antonyms_as_vocabulary_2.pluck(:id))
+  end
 end

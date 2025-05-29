@@ -1,0 +1,67 @@
+json.course_level do
+  json.id @course_level.id
+  json.title @course_level.title
+  json.description @course_level.description
+  json.position @course_level.position
+  json.point_type @point_type
+
+  case @point_type
+  when :kanji
+    json.kanjis @points do |kanji|
+      json.id kanji.id
+      json.title kanji.title
+      json.meanings kanji.meanings
+      json.kunyomi_readings kanji.kunyomi_readings
+      json.onyomi_readings kanji.onyomi_readings
+      json.related_kanjis kanji.related_kanjis do |related_kanji|
+        json.id related_kanji.id
+        json.title related_kanji.title
+        json.meanings related_kanji.meanings
+      end
+      json.example_sentences kanji.example_sentences do |sentence|
+        json.id sentence.id
+        json.sentence sentence.sentence
+        json.sentence_html sentence.sentence_html
+        json.translation sentence.translation
+      end
+    end
+  when :vocabulary
+    json.vocabularies @points do |vocabulary|
+      json.id vocabulary.id
+      json.title vocabulary.title
+      json.kana vocabulary.kana
+      json.meanings vocabulary.meanings
+      json.types vocabulary.types
+      json.synonyms vocabulary.synonyms do |synonym|
+        json.id synonym.id
+        json.title synonym.title
+        json.kana synonym.kana
+        json.meanings synonym.meanings
+      end
+      json.antonyms vocabulary.antonyms do |antonym|
+        json.id antonym.id
+        json.title antonym.title
+        json.kana antonym.kana
+        json.meanings antonym.meanings
+      end
+      json.example_sentences vocabulary.example_sentences do |sentence|
+        json.id sentence.id
+        json.sentence sentence.sentence
+        json.sentence_html sentence.sentence_html
+        json.translation sentence.translation
+      end
+    end
+  when :grammar
+    json.grammars @points do |grammar|
+      json.id grammar.id
+      json.title grammar.title
+      json.meanings grammar.meanings
+      json.example_sentences grammar.example_sentences do |sentence|
+        json.id sentence.id
+        json.sentence sentence.sentence
+        json.sentence_html sentence.sentence_html
+        json.translation sentence.translation
+      end
+    end
+  end
+end

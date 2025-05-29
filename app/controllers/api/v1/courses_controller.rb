@@ -29,30 +29,6 @@ module Api
                  when :grammar
                    @levels.includes(grammars: :translations)
                  end
-
-        render json: {
-          course: {
-            id: @course.id,
-            title: @course.title,
-            slug: @course.slug,
-            levels: @levels.map do |level|
-              {
-                id: level.id,
-                title: level.title,
-                description: level.description,
-                position: level.position,
-                points: case point_type
-                        when :kanji
-                          level.kanjis.map { |k| { id: k.id, title: k.title, meanings: k.meanings } }
-                        when :vocabulary
-                          level.vocabularies.map { |v| { id: v.id, title: v.title, meanings: v.meanings } }
-                        when :grammar
-                          level.grammars.map { |g| { id: g.id, title: g.title, meanings: g.meanings } }
-                        end
-              }
-            end
-          }
-        }
       end
 
       private

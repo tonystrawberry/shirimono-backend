@@ -19,4 +19,17 @@
 #  fk_rails_...  (kanji_2_id => kanjis.id)
 #
 class KanjiPair < ApplicationRecord
+  belongs_to :kanji_1, class_name: 'Kanji'
+  belongs_to :kanji_2, class_name: 'Kanji'
+
+  validates :kanji_1_id, uniqueness: { scope: :kanji_2_id }
+  validate :different_kanjis
+
+  private
+
+  def different_kanjis
+    if kanji_1_id == kanji_2_id
+      errors.add(:base, "Kanji pair must consist of different kanjis")
+    end
+  end
 end

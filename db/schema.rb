@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_29_130053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -261,7 +261,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_105533) do
   create_table "vocabulary_pairs", force: :cascade do |t|
     t.bigint "vocabulary_1_id", null: false, comment: "First vocabulary of the pair"
     t.bigint "vocabulary_2_id", null: false, comment: "Second vocabulary of the pair"
-    t.integer "type", default: 0, null: false, comment: "Type of the vocabulary pair (e.g, 0: synonym, 1: antonym)"
+    t.integer "pair_type", default: 0, null: false, comment: "Type of the vocabulary pair (e.g, 0: synonym, 1: antonym)"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["vocabulary_1_id"], name: "index_vocabulary_pairs_on_vocabulary_1_id"

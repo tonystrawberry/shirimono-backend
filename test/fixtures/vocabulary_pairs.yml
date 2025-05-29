@@ -8,12 +8,12 @@
 #
 # Table name: vocabulary_pairs
 #
-#  id                                                              :bigint           not null, primary key
-#  type(Type of the vocabulary pair (e.g, 0: synonym, 1: antonym)) :integer          default(0), not null
-#  created_at                                                      :datetime         not null
-#  updated_at                                                      :datetime         not null
-#  vocabulary_1_id(First vocabulary of the pair)                   :bigint           not null
-#  vocabulary_2_id(Second vocabulary of the pair)                  :bigint           not null
+#  id                                                                   :bigint           not null, primary key
+#  pair_type(Type of the vocabulary pair (e.g, 0: synonym, 1: antonym)) :integer          default("synonym"), not null
+#  created_at                                                           :datetime         not null
+#  updated_at                                                           :datetime         not null
+#  vocabulary_1_id(First vocabulary of the pair)                        :bigint           not null
+#  vocabulary_2_id(Second vocabulary of the pair)                       :bigint           not null
 #
 # Indexes
 #

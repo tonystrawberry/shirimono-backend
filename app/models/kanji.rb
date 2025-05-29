@@ -27,7 +27,17 @@ class Kanji < ApplicationRecord
   has_many :example_sentences, through: :example_sentence_kanjis
   has_many :point_of_the_days, as: :point, dependent: :destroy
 
+  # Kanji pairs
+  has_many :kanji_pairs_as_kanji_1, class_name: 'KanjiPair', foreign_key: :kanji_1_id, dependent: :destroy
+  has_many :kanji_pairs_as_kanji_2, class_name: 'KanjiPair', foreign_key: :kanji_2_id, dependent: :destroy
+  has_many :related_kanjis_as_kanji_1, through: :kanji_pairs_as_kanji_1, source: :kanji_2
+  has_many :related_kanjis_as_kanji_2, through: :kanji_pairs_as_kanji_2, source: :kanji_1
+
   validates :title, presence: true, uniqueness: true
   validates :slug, presence: true, uniqueness: true
   validates :meanings, presence: true
+
+  def related_kanjis
+    Kanji.where(id: related_kanjis_as_kanji_1.pluck(:id) + related_kanjis_as_kanji_2.pluck(:id))
+  end
 end

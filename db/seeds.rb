@@ -427,6 +427,81 @@ users.each do |user|
   end
 end
 
+# Create example sentences
+example_sentences = [
+  {
+    sentence: "私は学生です。",
+    sentence_html: "<ruby>私<rt>わたし</rt></ruby>は<ruby>学生<rt>がくせい</rt></ruby>です。",
+    translation: "I am a student.",
+    points: [n5_vocabularies[0], n5_vocabularies[1]] # 私, 学生
+  },
+  {
+    sentence: "先生は本を読みます。",
+    sentence_html: "<ruby>先生<rt>せんせい</rt></ruby>は<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。",
+    translation: "The teacher reads a book.",
+    points: [n5_vocabularies[2], n5_kanjis[1]] # 先生, 本
+  }
+].map do |data|
+  sentence = ExampleSentence.find_or_create_by!(sentence: data[:sentence]) do |s|
+    s.sentence_html = data[:sentence_html]
+    s.translation = data[:translation]
+  end
+
+  data[:points].each do |point|
+    if point.is_a?(Kanji)
+      ExampleSentenceKanji.find_or_create_by!(example_sentence: sentence, kanji: point)
+    elsif point.is_a?(Vocabulary)
+      ExampleSentenceVocabulary.find_or_create_by!(example_sentence: sentence, vocabulary: point)
+    end
+  end
+
+  sentence
+end
+
+# Create kanji pairs (connecting all kanjis within their JLPT level)
+[
+  n5_kanjis,
+  n4_kanjis,
+  n3_kanjis,
+  n2_kanjis,
+  n1_kanjis
+].each do |level_kanjis|
+  level_kanjis.each_with_index do |kanji_1, index|
+    level_kanjis[(index + 1)..-1].each do |kanji_2|
+      KanjiPair.find_or_create_by!(kanji_1: kanji_1, kanji_2: kanji_2)
+    end
+  end
+end
+
+# Create vocabulary pairs (both synonyms and antonyms within their JLPT level)
+[
+  n5_vocabularies,
+  n4_vocabularies,
+  n3_vocabularies,
+  n2_vocabularies,
+  n1_vocabularies
+].each do |level_vocabularies|
+  level_vocabularies.each_with_index do |vocab_1, index|
+    level_vocabularies[(index + 1)..-1].each do |vocab_2|
+      # Create synonym pairs for consecutive vocabularies
+      if index.even? && level_vocabularies[index + 1] == vocab_2
+        VocabularyPair.find_or_create_by!(
+          vocabulary_1: vocab_1,
+          vocabulary_2: vocab_2,
+          pair_type: :synonym
+        )
+      # Create antonym pairs for all other combinations
+      else
+        VocabularyPair.find_or_create_by!(
+          vocabulary_1: vocab_1,
+          vocabulary_2: vocab_2,
+          pair_type: :antonym
+        )
+      end
+    end
+  end
+end
+
 # Load all seed files from db/seeds directory
 Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each do |seed|
   load seed
