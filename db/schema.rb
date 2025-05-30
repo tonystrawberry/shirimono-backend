@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_29_130053) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_30_141038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -156,6 +156,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_29_130053) do
     t.index ["title"], name: "index_grammars_on_title", unique: true
   end
 
+  create_table "kanji_exercises", force: :cascade do |t|
+    t.bigint "kanji_id", null: false
+    t.string "question", null: false
+    t.integer "exercise_type", default: 0, null: false
+    t.integer "question_types", default: [], null: false, array: true
+    t.string "accepted_answers", default: [], null: false, array: true
+    t.string "wrong_answers", default: [], null: false, array: true
+    t.integer "unlock_mastery_level", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kanji_id"], name: "index_kanji_exercises_on_kanji_id"
+  end
+
   create_table "kanji_pairs", force: :cascade do |t|
     t.bigint "kanji_1_id", null: false, comment: "First kanji of the pair"
     t.bigint "kanji_2_id", null: false, comment: "Second kanji of the pair"
@@ -291,6 +304,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_29_130053) do
   add_foreign_key "example_sentence_kanjis", "kanjis"
   add_foreign_key "example_sentence_vocabularies", "example_sentences"
   add_foreign_key "example_sentence_vocabularies", "vocabularies"
+  add_foreign_key "kanji_exercises", "kanjis"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_1_id"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_2_id"
   add_foreign_key "user_courses", "courses"

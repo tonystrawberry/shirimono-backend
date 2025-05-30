@@ -80,6 +80,8 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    array_enum (1.6.0)
+      activemodel
     ast (2.4.3)
     base64 (0.2.0)
     bcrypt (3.1.20)
@@ -345,6 +347,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotaterb!
+  array_enum (~> 1.6)
   bootsnap
   brakeman
   counter_culture (~> 3.2)

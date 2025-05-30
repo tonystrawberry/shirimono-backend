@@ -506,3 +506,8 @@ end
 Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each do |seed|
   load seed
 end
+
+# Load additional seed files
+require_relative "seeds/example_sentences"
+require_relative "seeds/point_of_the_days"
+require_relative "seeds/kanji_exercises"

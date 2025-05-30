@@ -33,6 +33,8 @@ class Kanji < ApplicationRecord
   has_many :related_kanjis_as_kanji_1, through: :kanji_pairs_as_kanji_1, source: :kanji_2
   has_many :related_kanjis_as_kanji_2, through: :kanji_pairs_as_kanji_2, source: :kanji_1
 
+  has_many :kanji_exercises, dependent: :destroy
+
   validates :title, presence: true, uniqueness: true
   validates :slug, presence: true, uniqueness: true
   validates :meanings, presence: true
