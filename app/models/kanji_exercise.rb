@@ -22,7 +22,7 @@
 #  fk_rails_...  (kanji_id => kanjis.id)
 #
 class KanjiExercise < ApplicationRecord
-  extend ArrayEnum
+  extend ::ArrayEnum
 
   belongs_to :kanji
 

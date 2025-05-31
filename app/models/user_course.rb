@@ -26,4 +26,6 @@ class UserCourse < ApplicationRecord
   belongs_to :course
 
   has_many :user_reviews, dependent: :destroy
+  has_many :user_course_levels, dependent: :destroy
+  has_many :course_levels, through: :user_course_levels
 end

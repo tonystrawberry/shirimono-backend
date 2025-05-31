@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'user', to: 'users#show'
       resources :user_courses, only: [:index]
+      resources :user_course_levels, only: [:index]
       resources :courses, only: [:index, :show], param: :slug do
         get 'course_levels/:point_type/:position', to: 'course_levels#show'
         namespace :course_lessons do

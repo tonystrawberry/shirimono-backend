@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_31_063107) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_31_071019) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -222,6 +222,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_31_063107) do
     t.index ["point_type", "point_id"], name: "index_point_of_the_days_on_point"
   end
 
+  create_table "user_course_levels", force: :cascade do |t|
+    t.bigint "user_course_id", null: false
+    t.bigint "course_level_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_level_id"], name: "index_user_course_levels_on_course_level_id"
+    t.index ["user_course_id", "course_level_id"], name: "index_user_course_levels_on_user_course_id_and_course_level_id", unique: true
+    t.index ["user_course_id"], name: "index_user_course_levels_on_user_course_id"
+  end
+
   create_table "user_courses", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "User that the course belongs to"
     t.bigint "course_id", null: false, comment: "Course that the user belongs to"
@@ -334,6 +345,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_31_063107) do
   add_foreign_key "kanji_exercises", "kanjis"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_1_id"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_2_id"
+  add_foreign_key "user_course_levels", "course_levels"
+  add_foreign_key "user_course_levels", "user_courses"
   add_foreign_key "user_courses", "courses"
   add_foreign_key "user_courses", "users"
   add_foreign_key "user_reviews", "user_courses"

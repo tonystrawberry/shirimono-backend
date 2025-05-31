@@ -34,7 +34,7 @@ module Api
       private
 
       def set_course
-        @course = Course.includes(:translations).find_by!(slug: params[:id])
+        @course = Course.includes(:translations).find_by!(slug: params[:slug])
       end
     end
   end

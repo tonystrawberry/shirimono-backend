@@ -1,6 +1,8 @@
 module Api
   module V1
     class CourseLessonsController < ApplicationController
+      before_action :authenticate_user!
+
       before_action :set_course
       before_action :set_course_level, only: [:kanjis, :vocabularies, :grammars]
 

@@ -36,6 +36,9 @@ class CourseLevel < ApplicationRecord
   has_many :course_level_grammars, dependent: :destroy
   has_many :grammars, through: :course_level_grammars
 
+  has_many :user_course_levels, dependent: :destroy
+  has_many :user_courses, through: :user_course_levels
+
   enum :point_type, {
     kanji: 0,
     vocabulary: 1,
