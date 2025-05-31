@@ -11,8 +11,13 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'user', to: 'users#show'
       resources :user_courses, only: [:index]
-      resources :courses, only: [:index, :show] do
+      resources :courses, only: [:index, :show], param: :slug do
         get 'course_levels/:point_type/:position', to: 'course_levels#show'
+        namespace :course_lessons do
+          get 'kanjis/:position', to: 'course_lessons#kanjis'
+          get 'vocabularies/:position', to: 'course_lessons#vocabularies'
+          get 'grammars/:position', to: 'course_lessons#grammars'
+        end
       end
       resources :user_reviews, only: [:index]
 
