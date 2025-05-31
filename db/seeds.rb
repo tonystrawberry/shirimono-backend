@@ -511,3 +511,5 @@ end
 require_relative "seeds/example_sentences"
 require_relative "seeds/point_of_the_days"
 require_relative "seeds/kanji_exercises"
+require_relative "seeds/vocabulary_exercises"
+require_relative "seeds/grammar_exercises"

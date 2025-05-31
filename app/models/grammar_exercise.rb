@@ -1,34 +1,34 @@
 # == Schema Information
 #
-# Table name: kanji_exercises
+# Table name: grammar_exercises
 #
 #  id                   :bigint           not null, primary key
 #  accepted_answers     :string           default([]), not null, is an Array
-#  exercise_type        :integer          default("reading"), not null
+#  exercise_type        :integer          default("usage"), not null
 #  question             :string           not null
 #  question_types       :integer          default([]), not null, is an Array
 #  unlock_mastery_level :integer          default("beginner"), not null
 #  wrong_answers        :string           default([]), not null, is an Array
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  kanji_id             :bigint           not null
+#  grammar_id           :bigint           not null
 #
 # Indexes
 #
-#  index_kanji_exercises_on_kanji_id  (kanji_id)
+#  index_grammar_exercises_on_grammar_id  (grammar_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (kanji_id => kanjis.id)
+#  fk_rails_...  (grammar_id => grammars.id)
 #
-class KanjiExercise < ApplicationRecord
+class GrammarExercise < ApplicationRecord
   extend ArrayEnum
 
-  belongs_to :kanji
+  belongs_to :grammar
 
   # Enums
   enum :exercise_type, {
-    reading: 0,
+    usage: 0,
     meaning: 1
   }, prefix: true
 

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: kanji_exercises
+# Table name: vocabulary_exercises
 #
 #  id                   :bigint           not null, primary key
 #  accepted_answers     :string           default([]), not null, is an Array
@@ -11,20 +11,20 @@
 #  wrong_answers        :string           default([]), not null, is an Array
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  kanji_id             :bigint           not null
+#  vocabulary_id        :bigint           not null
 #
 # Indexes
 #
-#  index_kanji_exercises_on_kanji_id  (kanji_id)
+#  index_vocabulary_exercises_on_vocabulary_id  (vocabulary_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (kanji_id => kanjis.id)
+#  fk_rails_...  (vocabulary_id => vocabularies.id)
 #
-class KanjiExercise < ApplicationRecord
+class VocabularyExercise < ApplicationRecord
   extend ArrayEnum
 
-  belongs_to :kanji
+  belongs_to :vocabulary
 
   # Enums
   enum :exercise_type, {

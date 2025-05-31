@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: vocabulary_exercises
+#
+#  id                   :bigint           not null, primary key
+#  accepted_answers     :string           default([]), not null, is an Array
+#  exercise_type        :integer          default("reading"), not null
+#  question             :string           not null
+#  question_types       :integer          default([]), not null, is an Array
+#  unlock_mastery_level :integer          default("beginner"), not null
+#  wrong_answers        :string           default([]), not null, is an Array
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  vocabulary_id        :bigint           not null
+#
+# Indexes
+#
+#  index_vocabulary_exercises_on_vocabulary_id  (vocabulary_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (vocabulary_id => vocabularies.id)
+#
+require "test_helper"
+
+class VocabularyExerciseTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end
