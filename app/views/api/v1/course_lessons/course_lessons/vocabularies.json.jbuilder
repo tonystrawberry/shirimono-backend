@@ -6,12 +6,18 @@ json.course_level do
 end
 
 json.vocabularies @vocabularies do |vocabulary|
-  json.extract! vocabulary, :id, :title, :slug, :kana, :types
-  json.meanings vocabulary.meanings
+  # Get exercises for this vocabulary
+  vocabulary_exercises = @vocabulary_exercises.select { |ex| vocabulary.id == ex.vocabulary_id }
 
-  json.exercises @vocabulary_exercises.select { |ex| ex.unlock_mastery_level_beginner? } do |exercise|
-    json.extract! exercise, :id, :question, :exercise_type, :question_types
-    json.accepted_answers exercise.accepted_answers
-    json.wrong_answers exercise.wrong_answers
+  # Only include this vocabulary if it has unreviewed exercises
+  if vocabulary_exercises.present?
+    json.extract! vocabulary, :id, :title, :slug, :kana, :types
+    json.meanings vocabulary.meanings
+
+    json.exercises vocabulary_exercises do |exercise|
+      json.extract! exercise, :id, :question, :exercise_type, :question_types
+      json.accepted_answers exercise.accepted_answers
+      json.wrong_answers exercise.wrong_answers
+    end
   end
 end

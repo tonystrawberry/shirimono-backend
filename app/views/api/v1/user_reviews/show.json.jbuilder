@@ -27,8 +27,8 @@ json.user_review do
     case @user_review.course_point_type
     when "CourseLevelKanji"
       json.title @user_review.course_point.kanji.title
-      json.kunyomi_readings @user_review.course_point.kunyomi_readings
-      json.onyomi_readings @user_review.course_point.onyomi_readings
+      json.kunyomi_readings @user_review.course_point.kanji.kunyomi_readings
+      json.onyomi_readings @user_review.course_point.kanji.onyomi_readings
     when "CourseLevelVocabulary"
       json.title @user_review.course_point.vocabulary.title
       json.kana @user_review.course_point.vocabulary.kana
