@@ -22,7 +22,29 @@ module Api
           point_exercise_id: params[:point_exercise_id]
         )
 
+        puts "course_slug: #{params[:course_slug]}"
+        puts "course_point_type: #{params[:course_point_type]}"
+        puts "course_point_id: #{params[:course_point_id]}"
+        puts "point_exercise_type: #{params[:point_exercise_type]}"
+        puts "point_exercise_id: #{params[:point_exercise_id]}"
+
         @user_review = service.correct_review
+
+        point_type = case @user_review.course_point_type
+                    when 'CourseLevelKanji' then 'kanji'
+                    when 'CourseLevelVocabulary' then 'vocabulary'
+                    when 'CourseLevelGrammar' then 'grammar'
+                    end
+
+
+
+        UserCourseLevels::UpdateStatusService.new(user: current_user, course_slug: params[:course_slug], point_type: point_type).call
+
+        puts "course: #{Course.find_by(slug: params[:course_slug]).inspect}"
+        puts "type: #{point_type}"
+
+        UserCourseLevels::InitializeUserCourseLevelsService.new(user: current_user, course: Course.find_by(slug: params[:course_slug]), type: point_type).call
+
         render :show
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'Course or course point not found' }, status: :not_found

@@ -1,4 +1,4 @@
-module UserServices
+module UserCourseLevels
   class InitializeUserCourseLevelsService
     def initialize(user:, course:, type:)
       @user = user
@@ -13,6 +13,8 @@ module UserServices
     def call
       user_course = @user.user_courses.find_or_create_by!(course: @course)
 
+      puts "course: #{@course.inspect}"
+      puts "type: #{@type}"
       course_levels = @course.course_levels.where(point_type: @type).order(position: :asc)
 
       user_course_levels = user_course.user_course_levels.joins(:course_level)
@@ -25,15 +27,12 @@ module UserServices
         return
       end
 
-      binding.irb
-
+      next_course_level = course_levels.where('position > ?', user_course_levels.last.course_level.position).order(position: :asc).first
       # If the latest user course level is :done and there is no next course level, create a new one with :ready status at the next level
-      if user_course_levels.last.status == :done && user_course_levels.last.course_level.position == course_levels.last.position
-        user_course.user_course_levels.create!(status: :ready, course_level: course_levels.last)
+      if [:ready, :lessons_not_completed].exclude?(user_course_levels.last.status) && next_course_level.present?
+        user_course.user_course_levels.create!(status: :ready, course_level: next_course_level)
         return
       end
-
-
 
       # If the latest user course level is :done and there is a next course level, do nothing
 

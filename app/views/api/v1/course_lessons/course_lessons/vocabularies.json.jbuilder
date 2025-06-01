@@ -9,7 +9,7 @@ json.vocabularies @vocabularies do |vocabulary|
   json.extract! vocabulary, :id, :title, :slug, :kana, :types
   json.meanings vocabulary.meanings
 
-  json.exercises vocabulary.vocabulary_exercises.select { |ex| ex.unlock_mastery_level_beginner? } do |exercise|
+  json.exercises @vocabulary_exercises.select { |ex| ex.unlock_mastery_level_beginner? } do |exercise|
     json.extract! exercise, :id, :question, :exercise_type, :question_types
     json.accepted_answers exercise.accepted_answers
     json.wrong_answers exercise.wrong_answers

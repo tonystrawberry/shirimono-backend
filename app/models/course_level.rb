@@ -29,12 +29,15 @@ class CourseLevel < ApplicationRecord
 
   has_many :course_level_kanjis, dependent: :destroy
   has_many :kanjis, through: :course_level_kanjis
+  has_many :kanji_exercises, through: :kanjis
 
   has_many :course_level_vocabularies, dependent: :destroy
   has_many :vocabularies, through: :course_level_vocabularies
+  has_many :vocabulary_exercises, through: :vocabularies
 
   has_many :course_level_grammars, dependent: :destroy
   has_many :grammars, through: :course_level_grammars
+  has_many :grammar_exercises, through: :grammars
 
   has_many :user_course_levels, dependent: :destroy
   has_many :user_courses, through: :user_course_levels

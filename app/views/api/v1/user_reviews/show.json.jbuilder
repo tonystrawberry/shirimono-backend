@@ -23,16 +23,20 @@ json.user_review do
   json.course_point do
     json.id @user_review.course_point_id
     json.type @user_review.course_point_type
-    json.title @user_review.course_point.title
-    json.meanings @user_review.course_point.meanings
 
     case @user_review.course_point_type
-    when "CourseKanji"
+    when "CourseLevelKanji"
+      json.title @user_review.course_point.kanji.title
       json.kunyomi_readings @user_review.course_point.kunyomi_readings
       json.onyomi_readings @user_review.course_point.onyomi_readings
-    when "CourseVocabulary"
-      json.kana @user_review.course_point.kana
-      json.types @user_review.course_point.types
+    when "CourseLevelVocabulary"
+      json.title @user_review.course_point.vocabulary.title
+      json.kana @user_review.course_point.vocabulary.kana
+      json.types @user_review.course_point.vocabulary.types
+    when "CourseLevelGrammar"
+      json.title @user_review.course_point.grammar.title
+      json.meaning @user_review.course_point.grammar.meaning
+      json.grammar_type @user_review.course_point.grammar.grammar_type
     end
   end
 

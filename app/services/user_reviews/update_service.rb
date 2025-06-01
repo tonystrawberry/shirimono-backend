@@ -65,8 +65,7 @@ module UserReviews
 
       user_review = user_course.user_reviews
                               .find_or_initialize_by(
-                                course_point_type: get_course_point_type,
-                                course_point_id: course_point_id,
+                                course_point: get_course_point,
                                 point_exercise_type: get_point_exercise_type,
                                 point_exercise_id: point_exercise_id
                               )
@@ -86,13 +85,17 @@ module UserReviews
       end
     end
 
-    def get_course_point_type
+    def get_course_point
       case course_point_type
-      when 'kanji' then 'Kanji'
-      when 'vocabulary' then 'Vocabulary'
-      when 'grammar' then 'Grammar'
+      when 'kanji' then
+        CourseLevelKanji.joins(:kanji).find_by!(kanji: { id: course_point_id })
+      when 'vocabulary' then
+        CourseLevelVocabulary.joins(:vocabulary).find_by!(vocabulary: { id: course_point_id })
+      when 'grammar' then
+        CourseLevelGrammar.joins(:grammar).find_by!(grammar: { id: course_point_id })
       else raise "Invalid course point type: #{course_point_type}"
       end
+
     end
 
     def get_point_exercise_type

@@ -24,6 +24,10 @@ class UserCourseLevel < ApplicationRecord
   belongs_to :user_course
   belongs_to :course_level
 
+  has_many :kanji_exercises, through: :course_level
+  has_many :vocabulary_exercises, through: :course_level
+  has_many :grammar_exercises, through: :course_level
+
   # Enums
   enum :status, {
     ready: 0,               # Initial state, ready to start
