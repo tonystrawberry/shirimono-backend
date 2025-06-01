@@ -392,54 +392,6 @@ users.each do |user|
   # Enroll in N5 and N4
   [n5, n4].each do |course|
     user_course = UserCourse.find_or_create_by!(user: user, course: course)
-
-    # Create reviews for each course level
-    course.course_levels.each do |level|
-      # Create kanji reviews
-      level.kanjis.each do |kanji|
-        next if rand > 0.7 # 70% chance to create a review
-
-        UserReview.find_or_create_by!(
-          user_course: user_course,
-          course_point: level.course_level_kanjis.find_by(kanji: kanji)
-        ) do |review|
-          review.memorization_status = rand(0..6)
-          review.number_of_total_reviews = rand(1..10)
-          review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
-          review.next_review_at = Time.current + rand(1..7).days
-        end
-      end
-
-      # Create grammar reviews
-      level.grammars.each do |grammar|
-        next if rand > 0.7 # 70% chance to create a review
-
-        UserReview.find_or_create_by!(
-          user_course: user_course,
-          course_point: level.course_level_grammars.find_by(grammar: grammar)
-        ) do |review|
-          review.memorization_status = rand(0..6)
-          review.number_of_total_reviews = rand(1..10)
-          review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
-          review.next_review_at = Time.current + rand(1..7).days
-        end
-      end
-
-      # Create vocabulary reviews
-      level.vocabularies.each do |vocabulary|
-        next if rand > 0.7 # 70% chance to create a review
-
-        UserReview.find_or_create_by!(
-          user_course: user_course,
-          course_point: level.course_level_vocabularies.find_by(vocabulary: vocabulary)
-        ) do |review|
-          review.memorization_status = rand(0..6)
-          review.number_of_total_reviews = rand(1..10)
-          review.number_of_correct_reviews = rand(0..review.number_of_total_reviews)
-          review.next_review_at = Time.current + rand(1..7).days
-        end
-      end
-    end
   end
 end
 

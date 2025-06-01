@@ -20,7 +20,12 @@ Rails.application.routes.draw do
           get 'grammars/:position', to: 'course_lessons#grammars'
         end
       end
-      resources :user_reviews, only: [:index]
+      resources :user_reviews, only: [:index] do
+        collection do
+          post :correct_review
+          post :incorrect_review
+        end
+      end
 
       resources :point_of_the_days, only: [] do
         collection do

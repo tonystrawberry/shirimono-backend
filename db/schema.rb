@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_31_071019) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_01_050738) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -255,7 +255,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_31_071019) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_course_id", null: false, comment: "UserCourse that the review belongs to"
+    t.string "point_exercise_type"
+    t.bigint "point_exercise_id"
     t.index ["course_point_type", "course_point_id"], name: "index_user_reviews_on_course_point"
+    t.index ["point_exercise_type", "point_exercise_id"], name: "index_user_reviews_on_point_exercise"
     t.index ["user_course_id"], name: "index_user_reviews_on_user_course_id"
   end
 
