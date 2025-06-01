@@ -2,6 +2,8 @@
 puts "Creating vocabulary exercises..."
 
 Vocabulary.find_each do |vocabulary|
+  next if vocabulary.vocabulary_exercises.any?
+
   # Reading exercise
   VocabularyExercise.find_or_create_by!(
     vocabulary: vocabulary,

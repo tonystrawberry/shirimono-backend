@@ -2,6 +2,8 @@
 puts "Creating kanji exercises..."
 
 Kanji.find_each do |kanji|
+  next if kanji.kanji_exercises.any?
+
   # Reading exercise
   KanjiExercise.find_or_create_by!(
     kanji: kanji,

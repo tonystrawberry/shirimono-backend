@@ -26,6 +26,7 @@ class Vocabulary < ApplicationRecord
   has_many :example_sentence_vocabularies, dependent: :destroy
   has_many :example_sentences, through: :example_sentence_vocabularies
   has_many :point_of_the_days, as: :point, dependent: :destroy
+  has_many :vocabulary_exercises, dependent: :destroy
 
   # Vocabulary pairs
   has_many :vocabulary_pairs_as_vocabulary_1, class_name: 'VocabularyPair', foreign_key: :vocabulary_1_id, dependent: :destroy

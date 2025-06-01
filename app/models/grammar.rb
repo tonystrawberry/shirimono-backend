@@ -24,6 +24,7 @@ class Grammar < ApplicationRecord
   has_many :example_sentence_grammars, dependent: :destroy
   has_many :example_sentences, through: :example_sentence_grammars
   has_many :point_of_the_days, as: :point, dependent: :destroy
+  has_many :grammar_exercises, dependent: :destroy
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true

@@ -22,7 +22,7 @@ module Api
       private
 
       def set_course
-        @course = Course.find_by!(slug: params[:course_id])
+        @course = Course.find_by!(slug: params[:course_slug])
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'Course not found' }, status: :not_found
       end

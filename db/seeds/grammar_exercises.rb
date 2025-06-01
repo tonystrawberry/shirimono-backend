@@ -2,6 +2,8 @@
 puts "Creating grammar exercises..."
 
 Grammar.find_each do |grammar|
+  next if grammar.grammar_exercises.any?
+
   # Usage exercise (fill in the blank)
   GrammarExercise.find_or_create_by!(
     grammar: grammar,

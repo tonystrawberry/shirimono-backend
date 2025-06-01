@@ -54,7 +54,11 @@ end
 n5_kanjis = [
   { title: "日", slug: "日-hi", kunyomi_readings: ["ひ", "び", "か"], onyomi_readings: ["ニチ", "ジツ"], meanings: ["day", "sun"], level: n5_kanji_level1 },
   { title: "本", slug: "本-hon", kunyomi_readings: ["もと"], onyomi_readings: ["ホン"], meanings: ["book", "origin", "real"], level: n5_kanji_level1 },
-  { title: "人", slug: "人-jin", kunyomi_readings: ["ひと"], onyomi_readings: ["ジン", "ニン"], meanings: ["person", "people"], level: n5_kanji_level2 }
+  { title: "人", slug: "人-jin", kunyomi_readings: ["ひと"], onyomi_readings: ["ジン", "ニン"], meanings: ["person", "people"], level: n5_kanji_level2 },
+  { title: "月", slug: "月-tsuki", kunyomi_readings: ["つき"], onyomi_readings: ["ゲツ", "ガツ"], meanings: ["moon", "month"], level: n5_kanji_level1 },
+  { title: "火", slug: "火-hi", kunyomi_readings: ["ひ"], onyomi_readings: ["カ"], meanings: ["fire", "flame"], level: n5_kanji_level1 },
+  { title: "水", slug: "水-mizu", kunyomi_readings: ["みず"], onyomi_readings: ["スイ"], meanings: ["water"], level: n5_kanji_level2 },
+  { title: "木", slug: "木-ki", kunyomi_readings: ["き"], onyomi_readings: ["モク", "ボク"], meanings: ["tree", "wood"], level: n5_kanji_level2 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -121,7 +125,11 @@ end
 # N4 Kanji
 n4_kanjis = [
   { title: "親", slug: "親-oya", kunyomi_readings: ["おや"], onyomi_readings: ["シン"], meanings: ["parent", "intimate"], level: n4_kanji_level1 },
-  { title: "切", slug: "切-kiri", kunyomi_readings: ["き"], onyomi_readings: ["セツ", "サイ"], meanings: ["cut", "crucial"], level: n4_kanji_level1 }
+  { title: "切", slug: "切-kiri", kunyomi_readings: ["き"], onyomi_readings: ["セツ", "サイ"], meanings: ["cut", "crucial"], level: n4_kanji_level1 },
+  { title: "道", slug: "道-michi", kunyomi_readings: ["みち"], onyomi_readings: ["ドウ"], meanings: ["road", "way", "path"], level: n4_kanji_level1 },
+  { title: "会", slug: "会-kai", kunyomi_readings: ["あ"], onyomi_readings: ["カイ", "エ"], meanings: ["meeting", "meet"], level: n4_kanji_level1 },
+  { title: "社", slug: "社-sha", kunyomi_readings: ["やしろ"], onyomi_readings: ["シャ"], meanings: ["company", "society", "shrine"], level: n4_kanji_level1 },
+  { title: "校", slug: "校-kou", kunyomi_readings: [], onyomi_readings: ["コウ"], meanings: ["school", "exam"], level: n4_kanji_level1 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -186,7 +194,9 @@ end
 # N3 Kanji
 n3_kanjis = [
   { title: "織", slug: "織-ori", kunyomi_readings: ["お"], onyomi_readings: ["シキ"], meanings: ["weave", "fabric"], level: n3_kanji_level1 },
-  { title: "績", slug: "績-seki", kunyomi_readings: ["せき"], onyomi_readings: ["セキ"], meanings: ["performance", "results"], level: n3_kanji_level1 }
+  { title: "績", slug: "績-seki", kunyomi_readings: ["せき"], onyomi_readings: ["セキ"], meanings: ["performance", "results"], level: n3_kanji_level1 },
+  { title: "政", slug: "政-sei", kunyomi_readings: ["まつりごと"], onyomi_readings: ["セイ"], meanings: ["politics", "government"], level: n3_kanji_level1 },
+  { title: "経", slug: "経-kei", kunyomi_readings: ["へ"], onyomi_readings: ["ケイ", "キョウ"], meanings: ["manage", "economics"], level: n3_kanji_level1 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -251,7 +261,11 @@ end
 # N2 Kanji
 n2_kanjis = [
   { title: "憂", slug: "憂-yu", kunyomi_readings: ["うれ"], onyomi_readings: ["ユウ"], meanings: ["worry", "anxiety"], level: n2_kanji_level1 },
-  { title: "謙", slug: "謙-ken", kunyomi_readings: [], onyomi_readings: ["ケン"], meanings: ["modesty", "humble"], level: n2_kanji_level1 }
+  { title: "謙", slug: "謙-ken", kunyomi_readings: [], onyomi_readings: ["ケン"], meanings: ["modesty", "humble"], level: n2_kanji_level1 },
+  { title: "層", slug: "層-sou", kunyomi_readings: [], onyomi_readings: ["ソウ"], meanings: ["layer", "stratum", "class"], level: n2_kanji_level1 },
+  { title: "己", slug: "己-ko", kunyomi_readings: ["おのれ"], onyomi_readings: ["コ", "キ"], meanings: ["oneself", "self"], level: n2_kanji_level1 },
+  { title: "衆", slug: "衆-shuu", kunyomi_readings: [], onyomi_readings: ["シュウ"], meanings: ["masses", "crowd", "populace"], level: n2_kanji_level1 },
+  { title: "律", slug: "律-ritsu", kunyomi_readings: [], onyomi_readings: ["リツ", "リチ"], meanings: ["law", "regulation", "rhythm"], level: n2_kanji_level1 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
@@ -316,7 +330,9 @@ end
 # N1 Kanji
 n1_kanjis = [
   { title: "憤", slug: "憤-fun", kunyomi_readings: ["いきどお"], onyomi_readings: ["フン"], meanings: ["resent", "indignation"], level: n1_kanji_level1 },
-  { title: "遵", slug: "遵-jun", kunyomi_readings: [], onyomi_readings: ["ジュン"], meanings: ["abide by", "follow"], level: n1_kanji_level1 }
+  { title: "遵", slug: "遵-jun", kunyomi_readings: [], onyomi_readings: ["ジュン"], meanings: ["abide by", "follow"], level: n1_kanji_level1 },
+  { title: "謙", slug: "謙-ken", kunyomi_readings: ["へりくだ"], onyomi_readings: ["ケン"], meanings: ["modesty", "humble"], level: n1_kanji_level1 },
+  { title: "璧", slug: "璧-heki", kunyomi_readings: [], onyomi_readings: ["ヘキ"], meanings: ["jade disc", "perfect"], level: n1_kanji_level1 }
 ].map do |data|
   kanji = Kanji.find_or_create_by!(slug: data[:slug]) do |k|
     k.title = data[:title]
