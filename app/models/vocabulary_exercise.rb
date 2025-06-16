@@ -51,11 +51,11 @@ class VocabularyExercise < ApplicationRecord
   validates :unlock_mastery_level, presence: true, inclusion: { in: unlock_mastery_levels.keys }
 
   # Custom validation to ensure arrays are not empty
-  validate :answers_cannot_be_empty
+  validate :ensure_answers_are_not_empty
 
   private
 
-  def answers_cannot_be_empty
+  def ensure_answers_are_not_empty
     if accepted_answers.blank? || accepted_answers.reject(&:blank?).empty?
       errors.add(:accepted_answers, "must have at least one non-empty answer")
     end

@@ -27,22 +27,22 @@ class UserCourseLevel < ApplicationRecord
   has_many :kanji_exercises, through: :course_level
   has_many :vocabulary_exercises, through: :course_level
   has_many :grammar_exercises, through: :course_level
+  has_many :user_review_kanjis, dependent: :destroy
+  has_many :user_review_grammars, dependent: :destroy
+  has_many :user_review_vocabularies, dependent: :destroy
 
-  # Enums
+  delegate :user, to: :user_course
+  delegate :course, to: :user_course
+
   enum :status, {
-    ready: 0,               # Initial state, ready to start
+    ready: 0,                 # Initial state, ready to start
     lessons_not_completed: 1, # User has started but not completed all lessons
-    in_progress: 2,         # All lessons completed, working on exercises
-    in_progress_advanced: 3, # Working on advanced exercises
-    done: 4                # All exercises completed with required mastery
+    in_progress: 2,           # All lessons completed, working on exercises
+    in_progress_advanced: 3,  # Working on advanced exercises
+    done: 4                   # All exercises completed with required mastery
   }, prefix: true
 
-  # Validations
   validates :status, presence: true, inclusion: { in: statuses.keys }
   validates :user_course_id, uniqueness: { scope: :course_level_id,
     message: "user already has progress for this course level" }
-
-  # Delegate methods
-  delegate :user, to: :user_course
-  delegate :course, to: :user_course
 end

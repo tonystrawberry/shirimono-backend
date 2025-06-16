@@ -53,7 +53,10 @@ module UserCourseLevels
 
     def user_reviews_for_exercises(exercises)
       UserReview.where(
-        user_course: user.user_courses.joins(:course).where(courses: { slug: course_slug }),
+        user_course_level: user.user_course_levels
+          .joins(course_level: :course)
+          .where(courses: { slug: course_slug })
+          .where(course_levels: { point_type: point_type }),
         point_exercise_type: exercises.first.class.name,
         point_exercise_id: exercises.pluck(:id)
       )

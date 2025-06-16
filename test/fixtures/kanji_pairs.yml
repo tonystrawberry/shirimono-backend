@@ -8,11 +8,12 @@
 #
 # Table name: kanji_pairs
 #
-#  id                                   :bigint           not null, primary key
-#  created_at                           :datetime         not null
-#  updated_at                           :datetime         not null
-#  kanji_1_id(First kanji of the pair)  :bigint           not null
-#  kanji_2_id(Second kanji of the pair) :bigint           not null
+#  id                                                                   :bigint           not null, primary key
+#  pair_type(Pair type of the kanji pair (e.g, 0: similar, 1: related)) :integer          default("similar"), not null
+#  created_at                                                           :datetime         not null
+#  updated_at                                                           :datetime         not null
+#  kanji_1_id(First kanji of the pair)                                  :bigint           not null
+#  kanji_2_id(Second kanji of the pair)                                 :bigint           not null
 #
 # Indexes
 #

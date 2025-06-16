@@ -23,5 +23,6 @@ class ExampleSentenceGrammar < ApplicationRecord
   belongs_to :example_sentence
   belongs_to :grammar
 
-  validates :example_sentence_id, uniqueness: { scope: :grammar_id }
+  validates :example_sentence_id, uniqueness: { scope: :grammar_id }, presence: true
+  validates :grammar_id, presence: true
 end

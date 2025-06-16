@@ -13,42 +13,46 @@
 #  updated_at                                                                                 :datetime         not null
 #  course_point_id(Course point that the review belongs to)                                   :bigint           not null
 #  point_exercise_id                                                                          :bigint
-#  user_course_id(UserCourse that the review belongs to)                                      :bigint           not null
+#  user_course_level_id(UserCourseLevel that the review belongs to)                           :bigint           not null
 #
 # Indexes
 #
 #  index_user_reviews_on_course_point    (course_point_type,course_point_id)
 #  index_user_reviews_on_point_exercise  (point_exercise_type,point_exercise_id)
-#  index_user_reviews_on_user_course_id  (user_course_id)
+#  index_user_reviews_on_user_course_level_id  (user_course_level_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (user_course_id => user_courses.id)
+#  fk_rails_...  (user_course_level_id => user_course_levels.id)
 #
 class UserReview < ApplicationRecord
-  belongs_to :user_course
+  belongs_to :user_course_level
   belongs_to :course_point, polymorphic: true
   belongs_to :point_exercise, polymorphic: true
 
-  delegate :user, to: :user_course
+  delegate :user, to: :user_course_level
+  delegate :user_course, to: :user_course_level
+  delegate :kanji, to: :course_point
+  delegate :vocabulary, to: :course_point
+  delegate :grammar, to: :course_point
 
-  counter_culture :user_course,
-                 column_name: proc { |model| model.course_point_type == "CourseLevelKanji" ? 'kanji_user_reviews_count' : nil },
-                 column_names: {
-                   ["course_point_type = ?", "CourseLevelKanji"] => :kanji_user_reviews_count
-                 }
-
-  counter_culture :user_course,
-                 column_name: proc { |model| model.course_point_type == "CourseLevelGrammar" ? 'grammar_user_reviews_count' : nil },
-                 column_names: {
-                   ["course_point_type = ?", "CourseLevelGrammar"] => :grammar_user_reviews_count
-                 }
-
-  counter_culture :user_course,
-                 column_name: proc { |model| model.course_point_type == "CourseLevelVocabulary" ? 'vocabulary_user_reviews_count' : nil },
-                 column_names: {
-                   ["course_point_type = ?", "CourseLevelVocabulary"] => :vocabulary_user_reviews_count
-                 }
+  # counter_culture :user_course_level,
+  #                column_name: proc { |model| model.course_point_type == "CourseLevelKanji" ? 'kanji_user_reviews_count' : nil },
+  #                column_names: {
+  #                  ["course_point_type = ?", "CourseLevelKanji"] => :kanji_user_reviews_count
+  #                }
+  #
+  # counter_culture :user_course_level,
+  #                column_name: proc { |model| model.course_point_type == "CourseLevelGrammar" ? 'grammar_user_reviews_count' : nil },
+  #                column_names: {
+  #                  ["course_point_type = ?", "CourseLevelGrammar"] => :grammar_user_reviews_count
+  #                }
+  #
+  # counter_culture :user_course_level,
+  #                column_name: proc { |model| model.course_point_type == "CourseLevelVocabulary" ? 'vocabulary_user_reviews_count' : nil },
+  #                column_names: {
+  #                  ["course_point_type = ?", "CourseLevelVocabulary"] => :vocabulary_user_reviews_count
+  #                }
 
   enum :memorization_status, {
     level_0: 0,

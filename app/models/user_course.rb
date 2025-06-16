@@ -2,14 +2,14 @@
 #
 # Table name: user_courses
 #
-#  id                                                               :bigint           not null, primary key
-#  grammar_user_reviews_count(Number of grammar user reviews)       :integer          default(0), not null
-#  kanji_user_reviews_count(Number of kanji user reviews)           :integer          default(0), not null
-#  vocabulary_user_reviews_count(Number of vocabulary user reviews) :integer          default(0), not null
-#  created_at                                                       :datetime         not null
-#  updated_at                                                       :datetime         not null
-#  course_id(Course that the user belongs to)                       :bigint           not null
-#  user_id(User that the course belongs to)                         :bigint           not null
+#  id                                                                :bigint           not null, primary key
+#  user_review_grammars_count(Number of grammar user reviews)        :integer          default(0), not null
+#  user_review_kanjis_count(Number of kanji user reviews)            :integer          default(0), not null
+#  user_review_vocabularies_count(Number of vocabulary user reviews) :integer          default(0), not null
+#  created_at                                                        :datetime         not null
+#  updated_at                                                        :datetime         not null
+#  course_id(Course that the user belongs to)                        :bigint           not null
+#  user_id(User that the course belongs to)                          :bigint           not null
 #
 # Indexes
 #
@@ -25,7 +25,27 @@ class UserCourse < ApplicationRecord
   belongs_to :user
   belongs_to :course
 
-  has_many :user_reviews, dependent: :destroy
   has_many :user_course_levels, dependent: :destroy
   has_many :course_levels, through: :user_course_levels
+  has_many :user_review_kanjis, through: :user_course_levels
+  has_many :user_review_vocabularies, through: :user_course_levels
+  has_many :user_review_grammars, through: :user_course_levels
+
+  # Return the number of kanjis that the user has reviewed
+  # @return [Integer] The number of kanjis that the user has reviewed
+  def kanjis_count
+    user_review_kanjis.count
+  end
+
+  # Return the number of grammars that the user has reviewed
+  # @return [Integer] The number of grammars that the user has reviewed
+  def grammars_count
+    user_review_grammars.count
+  end
+
+  # Return the number of vocabularies that the user has reviewed
+  # @return [Integer] The number of vocabularies that the user has reviewed
+  def vocabularies_count
+    user_review_vocabularies.count
+  end
 end

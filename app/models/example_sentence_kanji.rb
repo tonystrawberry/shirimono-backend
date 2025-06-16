@@ -23,5 +23,6 @@ class ExampleSentenceKanji < ApplicationRecord
   belongs_to :example_sentence
   belongs_to :kanji
 
-  validates :example_sentence_id, uniqueness: { scope: :kanji_id }
+  validates :example_sentence_id, uniqueness: { scope: :kanji_id }, presence: true
+  validates :kanji_id, presence: true
 end

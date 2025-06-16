@@ -47,11 +47,21 @@ class Vocabulary < ApplicationRecord
   validates :meanings, presence: true
   validates :types, presence: true
 
+  after_commit :update_course_vocabularies_count, on: [:create, :destroy]
+
   def synonyms
     Vocabulary.where(id: synonyms_as_vocabulary_1.pluck(:id) + synonyms_as_vocabulary_2.pluck(:id))
   end
 
   def antonyms
     Vocabulary.where(id: antonyms_as_vocabulary_1.pluck(:id) + antonyms_as_vocabulary_2.pluck(:id))
+  end
+
+  private
+
+  # Called on :after_commit.
+  # Update the `vocabularies_count` of the courses that the vocabulary belongs to.
+  def update_course_vocabularies_count
+    courses.each(&:refresh_counts)
   end
 end

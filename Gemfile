@@ -59,3 +59,5 @@ gem "jbuilder", "~> 2.13"
 gem 'counter_culture', '~> 3.2'
 
 gem "array_enum", "~> 1.6"
+
+gem "draper", "~> 4.0"

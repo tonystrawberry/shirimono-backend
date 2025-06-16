@@ -7,6 +7,8 @@ class CreateExampleSentences < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
+    add_index :example_sentences, :sentence, unique: true
+
     reversible do |dir|
       dir.up do
         ExampleSentence.create_translation_table!(
@@ -18,7 +20,5 @@ class CreateExampleSentences < ActiveRecord::Migration[8.0]
         ExampleSentence.drop_translation_table!
       end
     end
-
-    add_index :example_sentences, :sentence, unique: true
   end
 end

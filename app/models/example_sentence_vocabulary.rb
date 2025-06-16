@@ -23,5 +23,6 @@ class ExampleSentenceVocabulary < ApplicationRecord
   belongs_to :example_sentence
   belongs_to :vocabulary
 
-  validates :example_sentence_id, uniqueness: { scope: :vocabulary_id }
+  validates :example_sentence_id, uniqueness: { scope: :vocabulary_id }, presence: true
+  validates :vocabulary_id, presence: true
 end

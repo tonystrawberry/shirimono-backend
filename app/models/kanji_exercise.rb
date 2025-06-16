@@ -26,7 +26,6 @@ class KanjiExercise < ApplicationRecord
 
   belongs_to :kanji
 
-  # Enums
   enum :exercise_type, {
     reading: 0,
     meaning: 1
@@ -42,7 +41,6 @@ class KanjiExercise < ApplicationRecord
 
   array_enum question_types: { text: 0, multi: 1 }, prefix: true
 
-  # Validations
   validates :question, presence: true
   validates :exercise_type, presence: true, inclusion: { in: exercise_types.keys }
   validates :question_types, presence: true
@@ -50,12 +48,13 @@ class KanjiExercise < ApplicationRecord
   validates :wrong_answers, presence: true
   validates :unlock_mastery_level, presence: true, inclusion: { in: unlock_mastery_levels.keys }
 
-  # Custom validation to ensure arrays are not empty
-  validate :answers_cannot_be_empty
+  validate :ensure_answers_are_not_empty
 
   private
 
-  def answers_cannot_be_empty
+  # Called on :validate.
+  # Ensure that the accepted_answers and wrong_answers arrays are not empty.
+  def ensure_answers_are_not_empty
     if accepted_answers.blank? || accepted_answers.reject(&:blank?).empty?
       errors.add(:accepted_answers, "must have at least one non-empty answer")
     end

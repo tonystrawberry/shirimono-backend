@@ -1,12 +1,11 @@
 module UserReviews
   class UpdateService
-    attr_reader :user, :course_slug, :course_point_type, :course_point_id, :point_exercise_type, :point_exercise_id
+    attr_reader :user, :course_slug, :level, :point_exercise_type, :point_exercise_id
 
-    def initialize(user:, course_slug:, course_point_type:, course_point_id:, point_exercise_type:, point_exercise_id:)
+    def initialize(user:, course_slug:, level:, point_exercise_type:, point_exercise_id:)
       @user = user
       @course_slug = course_slug
-      @course_point_type = course_point_type
-      @course_point_id = course_point_id
+      @level = level
       @point_exercise_type = point_exercise_type
       @point_exercise_id = point_exercise_id
     end
@@ -63,9 +62,26 @@ module UserReviews
       user_course = user.user_courses.joins(:course)
                        .find_by!(courses: { slug: course_slug })
 
-      user_review = user_course.user_reviews
+      course = Course.find_by(slug: course_slug)
+      course_level = course.course_levels.find_by!(point_type: point_exercise_type, position: level)
+
+      user_course_level = user_course.user_course_levels.find_by!(course_level: course_level)
+
+      point = case point_exercise_type
+              when 'kanji' then course_level.kanji_exercises.find_by!(id: point_exercise_id).kanji
+              when 'vocabulary' then course_level.vocabulary_exercises.find_by!(id: point_exercise_id).vocabulary
+              when 'grammar' then course_level.grammar_exercises.find_by!(id: point_exercise_id).grammar
+              end
+
+      course_level_point = case point_exercise_type
+                           when 'kanji' then user_course_level.course_level.course_level_kanjis.find_by!(kanji: point)
+                           when 'vocabulary' then user_course_level.course_level.course_level_vocabularies.find_by!(vocabulary: point)
+                           when 'grammar' then user_course_level.course_level.course_level_grammars.find_by!(grammar: point)
+                           end
+
+      user_review = user_course_level.user_reviews
                               .find_or_initialize_by(
-                                course_point: get_course_point,
+                                course_point: course_level_point,
                                 point_exercise_type: get_point_exercise_type,
                                 point_exercise_id: point_exercise_id
                               )

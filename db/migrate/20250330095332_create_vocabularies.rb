@@ -11,5 +11,15 @@ class CreateVocabularies < ActiveRecord::Migration[8.0]
 
     add_index :vocabularies, :title, unique: true
     add_index :vocabularies, :slug, unique: true
+
+    reversible do |dir|
+      dir.up do
+        Vocabulary.create_translation_table! :meanings => { type: :string, array: true, default: [], null: false, comment: "Meanings of the vocabulary" }
+      end
+
+      dir.down do
+        Vocabulary.drop_translation_table!
+      end
+    end
   end
 end

@@ -481,3 +481,7 @@ require_relative "seeds/point_of_the_days"
 require_relative "seeds/kanji_exercises"
 require_relative "seeds/vocabulary_exercises"
 require_relative "seeds/grammar_exercises"
+
+UserCourseLevels::InitializeUserCourseLevelsService.new(user: users[0], course: n5, type: :kanji).call
+UserCourseLevels::InitializeUserCourseLevelsService.new(user: users[0], course: n5, type: :vocabulary).call
+UserCourseLevels::InitializeUserCourseLevelsService.new(user: users[0], course: n5, type: :grammar).call

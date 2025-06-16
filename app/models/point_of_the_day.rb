@@ -18,11 +18,13 @@ class PointOfTheDay < ApplicationRecord
   belongs_to :point, polymorphic: true
 
   validates :featured_on, presence: true, uniqueness: true
-  validate :point_must_be_valid_type
+  validate :point_must_be_of_valid_type
 
   private
 
-  def point_must_be_valid_type
+  # Called on :validate.
+  # Ensure that the point is a valid type.
+  def point_must_be_of_valid_type
     unless point.is_a?(Kanji) || point.is_a?(Vocabulary) || point.is_a?(Grammar)
       errors.add(:point, 'must be a Kanji, Vocabulary, or Grammar')
     end

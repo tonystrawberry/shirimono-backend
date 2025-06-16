@@ -20,7 +20,6 @@ class Grammar < ApplicationRecord
   has_many :course_level_grammars, dependent: :destroy
   has_many :course_levels, through: :course_level_grammars
   has_many :courses, through: :course_levels
-
   has_many :example_sentence_grammars, dependent: :destroy
   has_many :example_sentences, through: :example_sentence_grammars
   has_many :point_of_the_days, as: :point, dependent: :destroy
@@ -29,4 +28,14 @@ class Grammar < ApplicationRecord
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :meanings, presence: true
+
+  after_commit :update_course_grammars_count, on: [:create, :destroy]
+
+  private
+
+  # Called on :after_commit.
+  # Update the `grammars_count` of the courses that the grammar belongs to.
+  def update_course_grammars_count
+    courses.each(&:refresh_counts)
+  end
 end

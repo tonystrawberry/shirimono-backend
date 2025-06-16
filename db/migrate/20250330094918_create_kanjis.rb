@@ -11,5 +11,15 @@ class CreateKanjis < ActiveRecord::Migration[8.0]
 
     add_index :kanjis, :title, unique: true
     add_index :kanjis, :slug, unique: true
+
+    reversible do |dir|
+      dir.up do
+        Kanji.create_translation_table! :meanings => { type: :string, array: true, default: [], null: false, comment: "Meanings of the kanji" }
+      end
+
+      dir.down do
+        Kanji.drop_translation_table!
+      end
+    end
   end
 end

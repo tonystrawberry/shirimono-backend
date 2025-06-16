@@ -35,8 +35,7 @@ json.user_review do
       json.types @user_review.course_point.vocabulary.types
     when "CourseLevelGrammar"
       json.title @user_review.course_point.grammar.title
-      json.meaning @user_review.course_point.grammar.meaning
-      json.grammar_type @user_review.course_point.grammar.grammar_type
+      json.meanings @user_review.course_point.grammar.meanings
     end
   end
 

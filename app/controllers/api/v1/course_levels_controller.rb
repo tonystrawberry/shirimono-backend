@@ -6,16 +6,22 @@ module Api
       before_action :validate_point_type
       before_action :set_course_level
 
+      # GET /api/v1/course_levels/:course_slug/:position
+      def index
+        @course_levels = @course.course_levels.where(point_type: @point_type)
+      end
+
       def show
         @points = case @point_type
                  when :kanji
-                   @course_level.kanjis.includes(:translations, :example_sentences, :related_kanjis_as_kanji_1, :related_kanjis_as_kanji_2)
+                   @course_level.kanjis.includes(:translations, :example_sentences, :related_kanjis_as_kanji_1, :related_kanjis_as_kanji_2, :kanji_exercises)
                  when :vocabulary
                    @course_level.vocabularies.includes(:translations, :example_sentences,
                      :synonyms_as_vocabulary_1, :synonyms_as_vocabulary_2,
-                     :antonyms_as_vocabulary_1, :antonyms_as_vocabulary_2)
+                     :antonyms_as_vocabulary_1, :antonyms_as_vocabulary_2,
+                     :vocabulary_exercises)
                  when :grammar
-                   @course_level.grammars.includes(:translations, :example_sentences)
+                   @course_level.grammars.includes(:translations, :example_sentences, :grammar_exercises)
                  end
       end
 

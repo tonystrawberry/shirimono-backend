@@ -15,19 +15,27 @@ class Course < ApplicationRecord
   translates :title
 
   has_many :course_levels, dependent: :destroy
+  has_many :course_level_kanjis, through: :course_levels
+  has_many :kanjis, through: :course_level_kanjis
+  has_many :course_level_vocabularies, through: :course_levels
+  has_many :vocabularies, through: :course_level_vocabularies
+  has_many :course_level_grammars, through: :course_levels
+  has_many :grammars, through: :course_level_grammars
   has_many :user_courses, dependent: :destroy
   has_many :users, through: :user_courses
 
-  # Access points through course levels
-  has_many :course_level_kanjis, through: :course_levels
-  has_many :kanjis, through: :course_level_kanjis
-
-  has_many :course_level_vocabularies, through: :course_levels
-  has_many :vocabularies, through: :course_level_vocabularies
-
-  has_many :course_level_grammars, through: :course_levels
-  has_many :grammars, through: :course_level_grammars
-
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
+  validates :kanjis_count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :vocabularies_count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :grammars_count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  # Refresh the counts of the course
+  # @return [void]
+  def refresh_counts
+    self.kanjis_count = kanjis.count
+    self.vocabularies_count = vocabularies.count
+    self.grammars_count = grammars.count
+    save!
+  end
 end

@@ -41,5 +41,5 @@ class User < ActiveRecord::Base
 
   has_many :user_courses, dependent: :destroy
   has_many :user_course_levels, through: :user_courses
-  has_many :user_reviews, through: :user_courses
+  has_many :user_reviews, through: :user_course_levels
 end

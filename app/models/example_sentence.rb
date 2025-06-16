@@ -18,10 +18,8 @@ class ExampleSentence < ApplicationRecord
 
   has_many :example_sentence_kanjis, dependent: :destroy
   has_many :kanjis, through: :example_sentence_kanjis
-
   has_many :example_sentence_vocabularies, dependent: :destroy
   has_many :vocabularies, through: :example_sentence_vocabularies
-
   has_many :example_sentence_grammars, dependent: :destroy
   has_many :grammars, through: :example_sentence_grammars
 

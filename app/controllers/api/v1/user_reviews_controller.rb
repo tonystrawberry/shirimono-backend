@@ -5,8 +5,8 @@ module Api
       before_action :set_user_review, only: [:incorrect_review]
 
       def index
-        @user_reviews = UserReview.joins(user_course: :course)
-                                .includes(user_course: :course, course_point: {}, point_exercise: {})
+        @user_reviews = UserReview.joins(user_course_level: { user_course: :course })
+                                .includes(user_course_level: { user_course: :course, course_point: {}, point_exercise: {} })
                                 .where(user_courses: { user_id: current_user.id })
                                 .order(:next_review_at)
       end
@@ -16,8 +16,7 @@ module Api
         service = UserReviews::UpdateService.new(
           user: current_user,
           course_slug: params[:course_slug],
-          course_point_type: params[:course_point_type],
-          course_point_id: params[:course_point_id],
+          level: params[:level],
           point_exercise_type: params[:point_exercise_type],
           point_exercise_id: params[:point_exercise_id]
         )
@@ -56,7 +55,7 @@ module Api
       def incorrect_review
         service = UserReviews::UpdateService.new(
           user: current_user,
-          course_slug: @user_review.user_course.course.slug,
+          course_slug: @user_review.user_course_level.user_course.course.slug,
           course_point_type: @user_review.course_point_type,
           course_point_id: @user_review.course_point_id,
           point_exercise_type: @user_review.point_exercise_type,

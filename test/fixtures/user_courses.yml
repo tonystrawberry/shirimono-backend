@@ -4,14 +4,14 @@
 #
 # Table name: user_courses
 #
-#  id                                                               :bigint           not null, primary key
-#  grammar_user_reviews_count(Number of grammar user reviews)       :integer          default(0), not null
-#  kanji_user_reviews_count(Number of kanji user reviews)           :integer          default(0), not null
-#  vocabulary_user_reviews_count(Number of vocabulary user reviews) :integer          default(0), not null
-#  created_at                                                       :datetime         not null
-#  updated_at                                                       :datetime         not null
-#  course_id(Course that the user belongs to)                       :bigint           not null
-#  user_id(User that the course belongs to)                         :bigint           not null
+#  id                                                                :bigint           not null, primary key
+#  user_review_grammars_count(Number of grammar user reviews)        :integer          default(0), not null
+#  user_review_kanjis_count(Number of kanji user reviews)            :integer          default(0), not null
+#  user_review_vocabularies_count(Number of vocabulary user reviews) :integer          default(0), not null
+#  created_at                                                        :datetime         not null
+#  updated_at                                                        :datetime         not null
+#  course_id(Course that the user belongs to)                        :bigint           not null
+#  user_id(User that the course belongs to)                          :bigint           not null
 #
 # Indexes
 #
