@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+# == Schema Information
+#
+# Table name: user_course_level_grammars
+#
+#  id                                                                                                                    :bigint           not null, primary key
+#  status(Status of the user course level grammar (e.g. not_started, partially_in_progress, all_in_progress, completed)) :integer          default("not_started"), not null
+#  user_reviews_grammars_count(Number of user reviews for the user course level grammar)                                 :integer          default(0), not null
+#  created_at                                                                                                            :datetime         not null
+#  updated_at                                                                                                            :datetime         not null
+#  course_level_grammar_id(CourseLevelGrammar that the grammar belongs to)                                               :bigint           not null
+#  user_course_id(UserCourse that the grammar belongs to)                                                                :bigint           not null
+#
+# Indexes
+#
+#  index_user_course_level_grammars_on_course_level_grammar_id  (course_level_grammar_id)
+#  index_user_course_level_grammars_on_user_course_id           (user_course_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (course_level_grammar_id => course_level_grammars.id)
+#  fk_rails_...  (user_course_id => user_courses.id)
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

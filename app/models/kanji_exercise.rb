@@ -2,16 +2,16 @@
 #
 # Table name: kanji_exercises
 #
-#  id                   :bigint           not null, primary key
-#  accepted_answers     :string           default([]), not null, is an Array
-#  exercise_type        :integer          default("reading"), not null
-#  question             :string           not null
-#  question_types       :integer          default([]), not null, is an Array
-#  unlock_mastery_level :integer          default("beginner"), not null
-#  wrong_answers        :string           default([]), not null, is an Array
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  kanji_id             :bigint           not null
+#  id                                                                                                                                  :bigint           not null, primary key
+#  accepted_answers(The accepted answers of the kanji exercise)                                                                        :string           default([]), not null, is an Array
+#  exercise_type(The type of the kanji exercise (e.g, `reading`, `meaning`))                                                           :integer          default("reading"), not null
+#  question(The question of the kanji exercise)                                                                                        :string           not null
+#  question_types(The types of the question of the kanji exercise (e.g, `text`, `multi`))                                              :integer          default([]), not null, is an Array
+#  unlock_mastery_level(The mastery level of the kanji exercise (e.g, `beginner`, `elementary`, `intermediate`, `advanced`, `master`)) :integer          default("beginner"), not null
+#  wrong_answers(The wrong answers of the kanji exercise)                                                                              :string           default([]), not null, is an Array
+#  created_at                                                                                                                          :datetime         not null
+#  updated_at                                                                                                                          :datetime         not null
+#  kanji_id(The kanji that the exercise belongs to)                                                                                    :bigint           not null
 #
 # Indexes
 #

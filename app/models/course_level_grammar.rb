@@ -2,28 +2,36 @@
 #
 # Table name: course_level_grammars
 #
-#  id                                                        :bigint           not null, primary key
-#  is_published(Whether the grammar is published or not)     :boolean          default(FALSE), not null
-#  created_at                                                :datetime         not null
-#  updated_at                                                :datetime         not null
-#  course_level_id(Course level that the grammar belongs to) :bigint           not null
-#  grammar_id(Grammar that belongs to the course)            :bigint           not null
+#  id                                              :bigint           not null, primary key
+#  description(Description of the grammar level)   :text
+#  grammars_count(Number of grammars in the level) :integer          default(0), not null
+#  position(Position of the level in the course)   :integer          not null
+#  title(Title of the grammar level)               :string
+#  created_at                                      :datetime         not null
+#  updated_at                                      :datetime         not null
+#  course_id(Course the level belongs to)          :bigint           not null
 #
 # Indexes
 #
-#  index_course_level_grammars_on_course_level_id                 (course_level_id)
-#  index_course_level_grammars_on_course_level_id_and_grammar_id  (course_level_id,grammar_id) UNIQUE
-#  index_course_level_grammars_on_grammar_id                      (grammar_id)
+#  index_course_level_grammars_on_course_id               (course_id)
+#  index_course_level_grammars_on_course_id_and_position  (course_id,position) UNIQUE
 #
 # Foreign Keys
 #
-#  fk_rails_...  (course_level_id => course_levels.id)
-#  fk_rails_...  (grammar_id => grammars.id)
+#  fk_rails_...  (course_id => courses.id)
 #
 class CourseLevelGrammar < ApplicationRecord
-  belongs_to :course_level
-  belongs_to :grammar
+  translates :title, :description
 
-  validates :course_level_id, uniqueness: { scope: :grammar_id }
-  validates :is_published, inclusion: { in: [true, false] }
+  belongs_to :course
+
+  has_many :course_level_grammar_links, dependent: :destroy
+  has_many :grammars, through: :course_level_grammar_links
+  has_many :grammar_exercises, through: :grammars
+  has_many :user_course_level_grammars, dependent: :destroy
+  has_many :user_courses, through: :user_course_level_grammars
+
+  validates :title, presence: true
+  validates :grammars_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :position, presence: true, uniqueness: { scope: [:course_id] }
 end

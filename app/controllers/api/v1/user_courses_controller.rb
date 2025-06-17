@@ -4,7 +4,7 @@ module Api
       before_action :authenticate_user!
 
       def index
-        @user_courses = current_user.user_courses.includes(:course)
+        @user_courses = current_user.user_courses.includes(:course).decorate
       end
     end
   end

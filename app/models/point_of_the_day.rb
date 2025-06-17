@@ -2,12 +2,12 @@
 #
 # Table name: point_of_the_days
 #
-#  id          :bigint           not null, primary key
-#  featured_on :date             not null
-#  point_type  :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  point_id    :bigint           not null
+#  id                                               :bigint           not null, primary key
+#  featured_on(The date when the point is featured) :date             not null
+#  point_type                                       :string           not null
+#  created_at                                       :datetime         not null
+#  updated_at                                       :datetime         not null
+#  point_id(The point that is featured)             :bigint           not null
 #
 # Indexes
 #

@@ -1,8 +1,7 @@
 class CreateUserReviewVocabularies < ActiveRecord::Migration[8.0]
   def change
     create_table :user_review_vocabularies do |t|
-      t.references :user_course_level, null: false, foreign_key: true, comment: "UserCourseLevel that the review belongs to"
-      t.references :course_level_vocabulary, null: false, foreign_key: true, comment: "CourseLevelVocabulary that the review belongs to"
+      t.references :user_course_level_vocabulary, null: false, foreign_key: true, comment: "UserCourseLevelVocabulary that the review belongs to"
       t.references :vocabulary_exercise, null: false, foreign_key: true, comment: "VocabularyExercise that the review belongs to"
       t.references :vocabulary, null: false, foreign_key: true, comment: "Vocabulary that the review belongs to"
 
@@ -13,5 +12,7 @@ class CreateUserReviewVocabularies < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+
+    add_index :user_review_vocabularies, [:user_course_level_vocabulary_id, :vocabulary_exercise_id, :vocabulary_id], unique: true, name: "index_user_review_vocabularies_unique"
   end
 end

@@ -5,10 +5,23 @@ module Api
       before_action :set_user_review, only: [:incorrect_review]
 
       def index
-        @user_reviews = UserReview.joins(user_course_level: { user_course: :course })
-                                .includes(user_course_level: { user_course: :course, course_point: {}, point_exercise: {} })
-                                .where(user_courses: { user_id: current_user.id })
-                                .order(:next_review_at)
+        @user_review_kanjis = UserReviewKanji
+          .joins(user_course_level_kanji: { user_course_level: :user_course })
+          .where(user_course_level_kanji: { user_course_level: { user_courses: { user_id: current_user.id } } })
+          .order(next_review_at: :asc)
+          .decorate
+
+        @user_review_vocabularies = UserReviewVocabulary
+          .joins(user_course_level_vocabulary: { user_course_level: :user_course })
+          .where(user_course_level_vocabulary: { user_course_level: { user_courses: { user_id: current_user.id } } })
+          .order(next_review_at: :asc)
+          .decorate
+
+        @user_review_grammars = UserReviewGrammar
+          .joins(user_course_level_grammar: { user_course_level: :user_course })
+          .where(user_course_level_grammar: { user_course_level: { user_courses: { user_id: current_user.id } } })
+          .order(next_review_at: :asc)
+          .decorate
       end
 
       # POST /api/v1/user_reviews/correct_review

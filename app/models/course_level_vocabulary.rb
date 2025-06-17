@@ -2,28 +2,36 @@
 #
 # Table name: course_level_vocabularies
 #
-#  id                                                           :bigint           not null, primary key
-#  is_published(Whether the vocabulary is published or not)     :boolean          default(FALSE), not null
-#  created_at                                                   :datetime         not null
-#  updated_at                                                   :datetime         not null
-#  course_level_id(Course level that the vocabulary belongs to) :bigint           not null
-#  vocabulary_id(Vocabulary that belongs to the course)         :bigint           not null
+#  id                                                      :bigint           not null, primary key
+#  description(Description of the vocabulary level)        :text
+#  position(Position of the level in the course)           :integer          not null
+#  title(Title of the vocabulary level)                    :string
+#  vocabularies_count(Number of vocabularies in the level) :integer          default(0), not null
+#  created_at                                              :datetime         not null
+#  updated_at                                              :datetime         not null
+#  course_id(Course the level belongs to)                  :bigint           not null
 #
 # Indexes
 #
-#  idx_on_course_level_id_vocabulary_id_150ec54039     (course_level_id,vocabulary_id) UNIQUE
-#  index_course_level_vocabularies_on_course_level_id  (course_level_id)
-#  index_course_level_vocabularies_on_vocabulary_id    (vocabulary_id)
+#  index_course_level_vocabularies_on_course_id               (course_id)
+#  index_course_level_vocabularies_on_course_id_and_position  (course_id,position) UNIQUE
 #
 # Foreign Keys
 #
-#  fk_rails_...  (course_level_id => course_levels.id)
-#  fk_rails_...  (vocabulary_id => vocabularies.id)
+#  fk_rails_...  (course_id => courses.id)
 #
 class CourseLevelVocabulary < ApplicationRecord
-  belongs_to :course_level
-  belongs_to :vocabulary
+  translates :title, :description
 
-  validates :course_level_id, uniqueness: { scope: :vocabulary_id }
-  validates :is_published, inclusion: { in: [true, false] }
+  belongs_to :course
+
+  has_many :course_level_vocabulary_links, dependent: :destroy
+  has_many :vocabularies, through: :course_level_vocabulary_links
+  has_many :vocabulary_exercises, through: :vocabularies
+  has_many :user_course_level_vocabularies, dependent: :destroy
+  has_many :user_courses, through: :user_course_level_vocabularies
+
+  validates :title, presence: true
+  validates :position, presence: true, uniqueness: { scope: [:course_id] }
+  validates :vocabularies_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
 end
