@@ -1,6 +1,7 @@
 ActiveRecord::Base.transaction do
   require_relative 'seeds/user'
   require_relative 'seeds/course'
+  require_relative 'seeds/user_course'
   require_relative 'seeds/kanji'
   require_relative 'seeds/vocabulary'
   require_relative 'seeds/grammar'

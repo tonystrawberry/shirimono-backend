@@ -7,7 +7,6 @@ class CreateGrammars < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :grammars, :title, unique: true
     add_index :grammars, :slug, unique: true
 
     reversible do |dir|

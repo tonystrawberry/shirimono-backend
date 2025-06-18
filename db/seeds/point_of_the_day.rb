@@ -6,9 +6,9 @@ points = (kanjis + vocabularies + grammars).shuffle
 
 100.times do |i|
   point = points[i % points.size]
-  PointOfTheDay.create!(
+  PointOfTheDay.find_or_create_by!(
     featured_on: Date.today + i,
-    point: point,
+    point_id: point.id,
     point_type: point.class.name
   )
 end

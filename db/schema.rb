@@ -206,7 +206,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_grammars_on_slug", unique: true
-    t.index ["title"], name: "index_grammars_on_title", unique: true
   end
 
   create_table "kanji_exercises", force: :cascade do |t|
@@ -422,7 +421,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_vocabularies_on_slug", unique: true
-    t.index ["title"], name: "index_vocabularies_on_title", unique: true
   end
 
   create_table "vocabulary_exercises", force: :cascade do |t|

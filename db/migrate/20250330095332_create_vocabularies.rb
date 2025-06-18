@@ -9,7 +9,6 @@ class CreateVocabularies < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :vocabularies, :title, unique: true
     add_index :vocabularies, :slug, unique: true
 
     reversible do |dir|
