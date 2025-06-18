@@ -1,0 +1,11 @@
+# db/seeds/user.rb
+User.create!(email: 'user1@example.com', password: 'password', name: 'Alice Tanaka', nickname: 'alice')
+User.create!(email: 'user2@example.com', password: 'password', name: 'Bob Suzuki', nickname: 'bob')
+User.create!(email: 'user3@example.com', password: 'password', name: 'Charlie Sato', nickname: 'charlie')
+User.create!(email: 'user4@example.com', password: 'password', name: 'Diana Yamada', nickname: 'diana')
+User.create!(email: 'user5@example.com', password: 'password', name: 'Eve Kobayashi', nickname: 'eve')
+User.create!(email: 'user6@example.com', password: 'password', name: 'Frank Watanabe', nickname: 'frank')
+User.create!(email: 'user7@example.com', password: 'password', name: 'Grace Nakamura', nickname: 'grace')
+User.create!(email: 'user8@example.com', password: 'password', name: 'Hank Takahashi', nickname: 'hank')
+User.create!(email: 'user9@example.com', password: 'password', name: 'Ivy Matsumoto', nickname: 'ivy')
+User.create!(email: 'user10@example.com', password: 'password', name: 'Jack Inoue', nickname: 'jack')

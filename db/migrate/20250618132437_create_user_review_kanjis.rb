@@ -1,7 +1,7 @@
 class CreateUserReviewKanjis < ActiveRecord::Migration[8.0]
   def change
     create_table :user_review_kanjis do |t|
-      t.references :user_course_level_kanji, null: false, foreign_key: true, comment: "UserCourseLevelKanji that the review belongs to"
+      t.references :user_course_level_kanji_link, null: false, foreign_key: true, comment: "UserCourseLevelKanjiLink that the review belongs to"
       t.references :kanji_exercise, null: false, foreign_key: true, comment: "KanjiExercise that the review belongs to"
       t.references :kanji, null: false, foreign_key: true, comment: "Kanji that the review belongs to"
 
@@ -13,6 +13,6 @@ class CreateUserReviewKanjis < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :user_review_kanjis, [:user_course_level_kanji_id, :kanji_exercise_id, :kanji_id], unique: true, name: "index_user_review_kanjis_unique"
+    add_index :user_review_kanjis, [:user_course_level_kanji_link_id, :kanji_exercise_id, :kanji_id], unique: true, name: "index_user_review_kanjis_unique"
   end
 end

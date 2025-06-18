@@ -22,7 +22,7 @@
 #
 class UserCourseLevelGrammar < ApplicationRecord
   belongs_to :user_course
-  belongs_to :course_level_grammar
+  belongs_to :course_level_grammar_link
 
   has_many :user_review_grammars, dependent: :destroy
 

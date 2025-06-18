@@ -11,20 +11,20 @@
 #  updated_at                                                                                 :datetime         not null
 #  grammar_exercise_id(GrammarExercise that the review belongs to)                            :bigint           not null
 #  grammar_id(Grammar that the review belongs to)                                             :bigint           not null
-#  user_course_level_grammar_id(UserCourseLevelGrammar that the review belongs to)            :bigint           not null
+#  user_course_level_grammar_link_id(UserCourseLevelGrammarLink that the review belongs to)   :bigint           not null
 #
 # Indexes
 #
-#  index_user_review_grammars_on_grammar_exercise_id           (grammar_exercise_id)
-#  index_user_review_grammars_on_grammar_id                    (grammar_id)
-#  index_user_review_grammars_on_user_course_level_grammar_id  (user_course_level_grammar_id)
-#  index_user_review_grammars_unique                           (user_course_level_grammar_id,grammar_exercise_id,grammar_id) UNIQUE
+#  idx_on_user_course_level_grammar_link_id_0e2f4eaf93  (user_course_level_grammar_link_id)
+#  index_user_review_grammars_on_grammar_exercise_id    (grammar_exercise_id)
+#  index_user_review_grammars_on_grammar_id             (grammar_id)
+#  index_user_review_grammars_unique                    (user_course_level_grammar_link_id,grammar_exercise_id,grammar_id) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (grammar_exercise_id => grammar_exercises.id)
 #  fk_rails_...  (grammar_id => grammars.id)
-#  fk_rails_...  (user_course_level_grammar_id => user_course_level_grammars.id)
+#  fk_rails_...  (user_course_level_grammar_link_id => user_course_level_grammar_links.id)
 #
 class UserReviewGrammar < ApplicationRecord
   belongs_to :user_course_level_grammar

@@ -24,6 +24,8 @@ class CourseLevelGrammarLink < ApplicationRecord
   belongs_to :course_level_grammar
   belongs_to :grammar
 
+  has_many :user_course_level_grammars, dependent: :destroy
+
   validates :course_level_id, uniqueness: { scope: :grammar_id }
   validates :is_published, inclusion: { in: [true, false] }
 end

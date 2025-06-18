@@ -1,7 +1,7 @@
 class CreateUserReviewGrammars < ActiveRecord::Migration[8.0]
   def change
     create_table :user_review_grammars do |t|
-      t.references :user_course_level_grammar, null: false, foreign_key: true, comment: "UserCourseLevelGrammar that the review belongs to"
+      t.references :user_course_level_grammar_link, null: false, foreign_key: true, comment: "UserCourseLevelGrammarLink that the review belongs to"
       t.references :grammar_exercise, null: false, foreign_key: true, comment: "GrammarExercise that the review belongs to"
       t.references :grammar, null: false, foreign_key: true, comment: "Grammar that the review belongs to"
 
@@ -13,6 +13,6 @@ class CreateUserReviewGrammars < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :user_review_grammars, [:user_course_level_grammar_id, :grammar_exercise_id, :grammar_id], unique: true, name: "index_user_review_grammars_unique"
+    add_index :user_review_grammars, [:user_course_level_grammar_link_id, :grammar_exercise_id, :grammar_id], unique: true, name: "index_user_review_grammars_unique"
   end
 end

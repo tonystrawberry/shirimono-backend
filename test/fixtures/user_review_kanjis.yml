@@ -17,20 +17,20 @@
 #  updated_at                                                                                 :datetime         not null
 #  kanji_exercise_id(KanjiExercise that the review belongs to)                                :bigint           not null
 #  kanji_id(Kanji that the review belongs to)                                                 :bigint           not null
-#  user_course_level_kanji_id(UserCourseLevelKanji that the review belongs to)                :bigint           not null
+#  user_course_level_kanji_link_id(UserCourseLevelKanjiLink that the review belongs to)       :bigint           not null
 #
 # Indexes
 #
-#  index_user_review_kanjis_on_kanji_exercise_id           (kanji_exercise_id)
-#  index_user_review_kanjis_on_kanji_id                    (kanji_id)
-#  index_user_review_kanjis_on_user_course_level_kanji_id  (user_course_level_kanji_id)
-#  index_user_review_kanjis_unique                         (user_course_level_kanji_id,kanji_exercise_id,kanji_id) UNIQUE
+#  index_user_review_kanjis_on_kanji_exercise_id                (kanji_exercise_id)
+#  index_user_review_kanjis_on_kanji_id                         (kanji_id)
+#  index_user_review_kanjis_on_user_course_level_kanji_link_id  (user_course_level_kanji_link_id)
+#  index_user_review_kanjis_unique                              (user_course_level_kanji_link_id,kanji_exercise_id,kanji_id) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (kanji_exercise_id => kanji_exercises.id)
 #  fk_rails_...  (kanji_id => kanjis.id)
-#  fk_rails_...  (user_course_level_kanji_id => user_course_level_kanjis.id)
+#  fk_rails_...  (user_course_level_kanji_link_id => user_course_level_kanji_links.id)
 #
 one: {}
 # column: value

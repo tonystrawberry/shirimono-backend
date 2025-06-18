@@ -22,7 +22,7 @@
 #
 class UserCourseLevelKanji < ApplicationRecord
   belongs_to :user_course
-  belongs_to :course_level_kanji
+  belongs_to :course_level_kanji_link
 
   has_many :user_review_kanjis, dependent: :destroy
 

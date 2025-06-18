@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -263,6 +263,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
     t.index ["point_type", "point_id"], name: "index_point_of_the_days_on_point"
   end
 
+  create_table "user_course_level_grammar_links", force: :cascade do |t|
+    t.bigint "user_course_level_grammar_id", null: false, comment: "UserCourseLevelGrammar that the grammar belongs to"
+    t.bigint "course_level_grammar_link_id", null: false, comment: "CourseLevelGrammar that the grammar belongs to"
+    t.integer "status", default: 0, null: false, comment: "Status of the user course level grammar (e.g. not_started, partially_in_progress, all_in_progress, completed)"
+    t.integer "user_reviews_grammars_count", default: 0, null: false, comment: "Number of user reviews for the user course level grammar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_level_grammar_link_id"], name: "idx_on_course_level_grammar_link_id_5fcd607a06"
+    t.index ["user_course_level_grammar_id"], name: "idx_on_user_course_level_grammar_id_121196a159"
+  end
+
   create_table "user_course_level_grammars", force: :cascade do |t|
     t.bigint "user_course_id", null: false, comment: "UserCourse that the grammar belongs to"
     t.bigint "course_level_grammar_id", null: false, comment: "CourseLevelGrammar that the grammar belongs to"
@@ -272,6 +283,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
     t.datetime "updated_at", null: false
     t.index ["course_level_grammar_id"], name: "index_user_course_level_grammars_on_course_level_grammar_id"
     t.index ["user_course_id"], name: "index_user_course_level_grammars_on_user_course_id"
+  end
+
+  create_table "user_course_level_kanji_links", force: :cascade do |t|
+    t.bigint "user_course_level_kanji_id", null: false, comment: "UserCourseLevelKanji that the kanji belongs to"
+    t.bigint "course_level_kanji_link_id", null: false, comment: "CourseLevelKanji that the kanji belongs to"
+    t.integer "status", default: 0, null: false, comment: "Status of the user course level kanji (e.g. not_started, partially_in_progress, all_in_progress, completed)"
+    t.integer "user_reviews_kanjis_count", default: 0, null: false, comment: "Number of user reviews for the user course level kanji"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_level_kanji_link_id"], name: "idx_on_course_level_kanji_link_id_eec815e419"
+    t.index ["user_course_level_kanji_id"], name: "idx_on_user_course_level_kanji_id_53e28fc233"
   end
 
   create_table "user_course_level_kanjis", force: :cascade do |t|
@@ -296,6 +318,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
     t.index ["user_course_id"], name: "index_user_course_level_vocabularies_on_user_course_id"
   end
 
+  create_table "user_course_level_vocabulary_links", force: :cascade do |t|
+    t.bigint "user_course_level_vocabulary_id", null: false, comment: "UserCourseLevelVocabulary that the vocabulary belongs to"
+    t.bigint "course_level_vocabulary_link_id", null: false, comment: "CourseLevelVocabulary that the vocabulary belongs to"
+    t.integer "status", default: 0, null: false, comment: "Status of the user course level vocabulary (e.g. not_started, partially_in_progress, all_in_progress, completed)"
+    t.integer "user_reviews_vocabularies_count", default: 0, null: false, comment: "Number of user reviews for the user course level vocabulary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_level_vocabulary_link_id"], name: "idx_on_course_level_vocabulary_link_id_e343d47419"
+    t.index ["user_course_level_vocabulary_id"], name: "idx_on_user_course_level_vocabulary_id_055b117a25"
+  end
+
   create_table "user_courses", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "User that the course belongs to"
     t.bigint "course_id", null: false, comment: "Course that the user belongs to"
@@ -309,7 +342,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
   end
 
   create_table "user_review_grammars", force: :cascade do |t|
-    t.bigint "user_course_level_grammar_id", null: false, comment: "UserCourseLevelGrammar that the review belongs to"
+    t.bigint "user_course_level_grammar_link_id", null: false, comment: "UserCourseLevelGrammarLink that the review belongs to"
     t.bigint "grammar_exercise_id", null: false, comment: "GrammarExercise that the review belongs to"
     t.bigint "grammar_id", null: false, comment: "Grammar that the review belongs to"
     t.integer "memorization_status", default: 0, null: false, comment: "Memorization status of the user review"
@@ -320,12 +353,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
     t.datetime "updated_at", null: false
     t.index ["grammar_exercise_id"], name: "index_user_review_grammars_on_grammar_exercise_id"
     t.index ["grammar_id"], name: "index_user_review_grammars_on_grammar_id"
-    t.index ["user_course_level_grammar_id", "grammar_exercise_id", "grammar_id"], name: "index_user_review_grammars_unique", unique: true
-    t.index ["user_course_level_grammar_id"], name: "index_user_review_grammars_on_user_course_level_grammar_id"
+    t.index ["user_course_level_grammar_link_id", "grammar_exercise_id", "grammar_id"], name: "index_user_review_grammars_unique", unique: true
+    t.index ["user_course_level_grammar_link_id"], name: "idx_on_user_course_level_grammar_link_id_0e2f4eaf93"
   end
 
   create_table "user_review_kanjis", force: :cascade do |t|
-    t.bigint "user_course_level_kanji_id", null: false, comment: "UserCourseLevelKanji that the review belongs to"
+    t.bigint "user_course_level_kanji_link_id", null: false, comment: "UserCourseLevelKanjiLink that the review belongs to"
     t.bigint "kanji_exercise_id", null: false, comment: "KanjiExercise that the review belongs to"
     t.bigint "kanji_id", null: false, comment: "Kanji that the review belongs to"
     t.integer "memorization_status", default: 0, null: false, comment: "Memorization status of the user review"
@@ -336,12 +369,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
     t.datetime "updated_at", null: false
     t.index ["kanji_exercise_id"], name: "index_user_review_kanjis_on_kanji_exercise_id"
     t.index ["kanji_id"], name: "index_user_review_kanjis_on_kanji_id"
-    t.index ["user_course_level_kanji_id", "kanji_exercise_id", "kanji_id"], name: "index_user_review_kanjis_unique", unique: true
-    t.index ["user_course_level_kanji_id"], name: "index_user_review_kanjis_on_user_course_level_kanji_id"
+    t.index ["user_course_level_kanji_link_id", "kanji_exercise_id", "kanji_id"], name: "index_user_review_kanjis_unique", unique: true
+    t.index ["user_course_level_kanji_link_id"], name: "index_user_review_kanjis_on_user_course_level_kanji_link_id"
   end
 
   create_table "user_review_vocabularies", force: :cascade do |t|
-    t.bigint "user_course_level_vocabulary_id", null: false, comment: "UserCourseLevelVocabulary that the review belongs to"
+    t.bigint "user_course_level_vocabulary_link_id", null: false, comment: "UserCourseLevelVocabularyLink that the review belongs to"
     t.bigint "vocabulary_exercise_id", null: false, comment: "VocabularyExercise that the review belongs to"
     t.bigint "vocabulary_id", null: false, comment: "Vocabulary that the review belongs to"
     t.integer "memorization_status", default: 0, null: false, comment: "Memorization status of the user review"
@@ -350,8 +383,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
     t.datetime "next_review_at", comment: "Next review date for the user review"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_course_level_vocabulary_id", "vocabulary_exercise_id", "vocabulary_id"], name: "index_user_review_vocabularies_unique", unique: true
-    t.index ["user_course_level_vocabulary_id"], name: "idx_on_user_course_level_vocabulary_id_8f3549ed48"
+    t.index ["user_course_level_vocabulary_link_id", "vocabulary_exercise_id", "vocabulary_id"], name: "index_user_review_vocabularies_unique", unique: true
+    t.index ["user_course_level_vocabulary_link_id"], name: "idx_on_user_course_level_vocabulary_link_id_bcea9f3590"
     t.index ["vocabulary_exercise_id"], name: "index_user_review_vocabularies_on_vocabulary_exercise_id"
     t.index ["vocabulary_id"], name: "index_user_review_vocabularies_on_vocabulary_id"
   end
@@ -444,21 +477,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_133222) do
   add_foreign_key "kanji_exercises", "kanjis"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_1_id"
   add_foreign_key "kanji_pairs", "kanjis", column: "kanji_2_id"
+  add_foreign_key "user_course_level_grammar_links", "course_level_grammar_links"
+  add_foreign_key "user_course_level_grammar_links", "user_course_level_grammars"
   add_foreign_key "user_course_level_grammars", "course_level_grammars"
   add_foreign_key "user_course_level_grammars", "user_courses"
+  add_foreign_key "user_course_level_kanji_links", "course_level_kanji_links"
+  add_foreign_key "user_course_level_kanji_links", "user_course_level_kanjis"
   add_foreign_key "user_course_level_kanjis", "course_level_kanjis"
   add_foreign_key "user_course_level_kanjis", "user_courses"
   add_foreign_key "user_course_level_vocabularies", "course_level_vocabularies"
   add_foreign_key "user_course_level_vocabularies", "user_courses"
+  add_foreign_key "user_course_level_vocabulary_links", "course_level_vocabulary_links"
+  add_foreign_key "user_course_level_vocabulary_links", "user_course_level_vocabularies"
   add_foreign_key "user_courses", "courses"
   add_foreign_key "user_courses", "users"
   add_foreign_key "user_review_grammars", "grammar_exercises"
   add_foreign_key "user_review_grammars", "grammars"
-  add_foreign_key "user_review_grammars", "user_course_level_grammars"
+  add_foreign_key "user_review_grammars", "user_course_level_grammar_links"
   add_foreign_key "user_review_kanjis", "kanji_exercises"
   add_foreign_key "user_review_kanjis", "kanjis"
-  add_foreign_key "user_review_kanjis", "user_course_level_kanjis"
-  add_foreign_key "user_review_vocabularies", "user_course_level_vocabularies"
+  add_foreign_key "user_review_kanjis", "user_course_level_kanji_links"
+  add_foreign_key "user_review_vocabularies", "user_course_level_vocabulary_links"
   add_foreign_key "user_review_vocabularies", "vocabularies"
   add_foreign_key "user_review_vocabularies", "vocabulary_exercises"
   add_foreign_key "vocabulary_exercises", "vocabularies"

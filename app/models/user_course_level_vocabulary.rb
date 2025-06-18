@@ -22,7 +22,7 @@
 #
 class UserCourseLevelVocabulary < ApplicationRecord
   belongs_to :user_course
-  belongs_to :course_level_vocabulary
+  belongs_to :course_level_vocabulary_link
 
   has_many :user_review_vocabularies, dependent: :destroy
 
