@@ -39,7 +39,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
   create_table "course_level_grammars", force: :cascade do |t|
     t.bigint "course_id", null: false, comment: "Course the level belongs to"
     t.integer "position", null: false, comment: "Position of the level in the course"
-    t.integer "grammars_count", default: 0, null: false, comment: "Number of grammars in the level"
+    t.integer "course_level_grammar_links_count", default: 0, null: false, comment: "Number of grammars in the level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id", "position"], name: "index_course_level_grammars_on_course_id_and_position", unique: true
@@ -71,7 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
   create_table "course_level_kanjis", force: :cascade do |t|
     t.bigint "course_id", null: false, comment: "Course the level belongs to"
     t.integer "position", null: false, comment: "Position of the level in the course"
-    t.integer "kanjis_count", default: 0, null: false, comment: "Number of kanjis in the level"
+    t.integer "course_level_kanji_links_count", default: 0, null: false, comment: "Number of kanjis in the level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id", "position"], name: "index_course_level_kanjis_on_course_id_and_position", unique: true
@@ -81,7 +81,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
   create_table "course_level_vocabularies", force: :cascade do |t|
     t.bigint "course_id", null: false, comment: "Course the level belongs to"
     t.integer "position", null: false, comment: "Position of the level in the course"
-    t.integer "vocabularies_count", default: 0, null: false, comment: "Number of vocabularies in the level"
+    t.integer "course_level_vocabulary_links_count", default: 0, null: false, comment: "Number of vocabularies in the level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id", "position"], name: "index_course_level_vocabularies_on_course_id_and_position", unique: true

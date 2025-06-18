@@ -28,4 +28,6 @@ class CourseLevelGrammarLink < ApplicationRecord
 
   validates :course_level_grammar_id, uniqueness: { scope: :grammar_id }
   validates :is_published, inclusion: { in: [true, false] }
+
+  counter_culture :course_level_grammar
 end

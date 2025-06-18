@@ -28,4 +28,6 @@ class CourseLevelVocabularyLink < ApplicationRecord
 
   validates :course_level_vocabulary_id, uniqueness: { scope: :vocabulary_id }
   validates :is_published, inclusion: { in: [true, false] }
+
+  counter_culture :course_level_vocabulary
 end

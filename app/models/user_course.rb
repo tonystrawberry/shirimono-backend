@@ -27,26 +27,29 @@ class UserCourse < ApplicationRecord
 
   has_many :user_course_level_kanjis, dependent: :destroy
   has_many :course_level_kanjis, through: :user_course_level_kanjis
+  has_many :user_course_level_kanji_links, through: :user_course_level_kanjis
   has_many :user_course_level_grammars, dependent: :destroy
   has_many :course_level_grammars, through: :user_course_level_grammars
+  has_many :user_course_level_grammar_links, through: :user_course_level_grammars
   has_many :user_course_level_vocabularies, dependent: :destroy
   has_many :course_level_vocabularies, through: :user_course_level_vocabularies
+  has_many :user_course_level_vocabulary_links, through: :user_course_level_vocabularies
 
   # Return the number of kanjis that the user has reviewed
   # @return [Integer] The number of kanjis that the user has reviewed
   def kanjis_count
-    user_course_level_kanjis.count
+    user_course_level_kanji_links.count
   end
 
   # Return the number of grammars that the user has reviewed
   # @return [Integer] The number of grammars that the user has reviewed
   def grammars_count
-    user_course_level_grammars.count
+    user_course_level_grammar_links.count
   end
 
   # Return the number of vocabularies that the user has reviewed
   # @return [Integer] The number of vocabularies that the user has reviewed
   def vocabularies_count
-    user_course_level_vocabularies.count
+    user_course_level_vocabulary_links.count
   end
 end

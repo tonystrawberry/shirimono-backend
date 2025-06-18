@@ -24,8 +24,8 @@ class UserCourseLevelVocabulary < ApplicationRecord
   belongs_to :user_course
   belongs_to :course_level_vocabulary
 
-  has_many :user_review_vocabulary_links, dependent: :destroy
-  has_many :user_review_vocabularies, through: :user_review_vocabulary_links
+  has_many :user_course_level_vocabulary_links, dependent: :destroy
+  has_many :user_review_vocabularies, through: :user_course_level_vocabulary_links
 
   enum :status, {
     not_started: 0,
@@ -33,4 +33,20 @@ class UserCourseLevelVocabulary < ApplicationRecord
     all_in_progress: 2,
     completed: 3
   }, prefix: true
+
+  # Update the status based on the `user_course_level_vocabulary_links_count`
+  # @return [void]
+  def update_status!
+    if user_course_level_vocabulary_links_count == course_level_vocabulary.vocabularies_count
+      if user_course_level_vocabulary_links.pluck(:status).all?(:completed)
+        update!(status: :completed)
+      else
+        update!(status: :all_in_progress)
+      end
+    elsif user_course_level_vocabulary_links_count > 0
+      update!(status: :partially_in_progress)
+    else
+      update!(status: :not_started)
+    end
+  end
 end

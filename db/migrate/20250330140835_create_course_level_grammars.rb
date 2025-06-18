@@ -4,7 +4,7 @@ class CreateCourseLevelGrammars < ActiveRecord::Migration[8.0]
       t.references :course, null: false, foreign_key: true, comment: "Course the level belongs to"
 
       t.integer :position, null: false, comment: "Position of the level in the course"
-      t.integer :grammars_count, null: false, default: 0, comment: "Number of grammars in the level"
+      t.integer :course_level_grammar_links_count, null: false, default: 0, comment: "Number of grammars in the level"
 
       t.timestamps
     end

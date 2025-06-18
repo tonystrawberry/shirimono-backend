@@ -28,4 +28,6 @@ class CourseLevelKanjiLink < ApplicationRecord
 
   validates :course_level_kanji_id, uniqueness: { scope: :kanji_id }
   validates :is_published, inclusion: { in: [true, false] }
+
+  counter_culture :course_level_kanji
 end

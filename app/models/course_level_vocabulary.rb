@@ -2,14 +2,14 @@
 #
 # Table name: course_level_vocabularies
 #
-#  id                                                      :bigint           not null, primary key
-#  description(Description of the vocabulary level)        :text
-#  position(Position of the level in the course)           :integer          not null
-#  title(Title of the vocabulary level)                    :string
-#  vocabularies_count(Number of vocabularies in the level) :integer          default(0), not null
-#  created_at                                              :datetime         not null
-#  updated_at                                              :datetime         not null
-#  course_id(Course the level belongs to)                  :bigint           not null
+#  id                                                                       :bigint           not null, primary key
+#  course_level_vocabulary_links_count(Number of vocabularies in the level) :integer          default(0), not null
+#  description(Description of the vocabulary level)                         :text
+#  position(Position of the level in the course)                            :integer          not null
+#  title(Title of the vocabulary level)                                     :string
+#  created_at                                                               :datetime         not null
+#  updated_at                                                               :datetime         not null
+#  course_id(Course the level belongs to)                                   :bigint           not null
 #
 # Indexes
 #
@@ -33,5 +33,5 @@ class CourseLevelVocabulary < ApplicationRecord
 
   validates :title, presence: true
   validates :position, presence: true, uniqueness: { scope: [:course_id] }
-  validates :vocabularies_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :course_level_vocabulary_links_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
 end

@@ -8,7 +8,7 @@ Course.all.each do |course|
     CourseLevelVocabulary.find_or_create_by!(course: course, position: index + 1) do |level|
       level.title = title
       level.description = description
-      level.vocabularies_count = 0
+      level.course_level_vocabulary_links_count = 0
     end
   end
 end

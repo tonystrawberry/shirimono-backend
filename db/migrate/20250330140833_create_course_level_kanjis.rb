@@ -4,7 +4,7 @@ class CreateCourseLevelKanjis < ActiveRecord::Migration[8.0]
       t.references :course, null: false, foreign_key: true, comment: "Course the level belongs to"
 
       t.integer :position, null: false, comment: "Position of the level in the course"
-      t.integer :kanjis_count, null: false, default: 0, comment: "Number of kanjis in the level"
+      t.integer :course_level_kanji_links_count, null: false, default: 0, comment: "Number of kanjis in the level"
 
       t.timestamps
     end

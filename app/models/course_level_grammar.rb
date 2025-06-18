@@ -2,14 +2,14 @@
 #
 # Table name: course_level_grammars
 #
-#  id                                              :bigint           not null, primary key
-#  description(Description of the grammar level)   :text
-#  grammars_count(Number of grammars in the level) :integer          default(0), not null
-#  position(Position of the level in the course)   :integer          not null
-#  title(Title of the grammar level)               :string
-#  created_at                                      :datetime         not null
-#  updated_at                                      :datetime         not null
-#  course_id(Course the level belongs to)          :bigint           not null
+#  id                                                                :bigint           not null, primary key
+#  course_level_grammar_links_count(Number of grammars in the level) :integer          default(0), not null
+#  description(Description of the grammar level)                     :text
+#  position(Position of the level in the course)                     :integer          not null
+#  title(Title of the grammar level)                                 :string
+#  created_at                                                        :datetime         not null
+#  updated_at                                                        :datetime         not null
+#  course_id(Course the level belongs to)                            :bigint           not null
 #
 # Indexes
 #
@@ -32,6 +32,6 @@ class CourseLevelGrammar < ApplicationRecord
   has_many :user_courses, through: :user_course_level_grammars
 
   validates :title, presence: true
-  validates :grammars_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :course_level_grammar_links_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :position, presence: true, uniqueness: { scope: [:course_id] }
 end

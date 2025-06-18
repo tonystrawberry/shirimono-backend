@@ -14,6 +14,16 @@ Rails.application.routes.draw do
       resources :user_course_levels, only: [:index]
       resources :courses, only: [:index, :show], param: :slug do
         get 'course_levels/:point_type/:position', to: 'course_levels#show'
+
+        # Add course_levels routes for kanjis, vocabularies, grammars
+        get 'course_levels/kanjis', to: 'courses/course_levels#index_kanjis'
+        get 'course_levels/vocabularies', to: 'courses/course_levels#index_vocabularies'
+        get 'course_levels/grammars', to: 'courses/course_levels#index_grammars'
+
+        get 'course_levels/kanjis/:position', to: 'courses/course_levels#show_kanjis'
+        get 'course_levels/vocabularies/:position', to: 'courses/course_levels#show_vocabularies'
+        get 'course_levels/grammars/:position', to: 'courses/course_levels#show_grammars'
+
         namespace :course_lessons do
           get 'kanjis/:position', to: 'course_lessons#kanjis'
           get 'vocabularies/:position', to: 'course_lessons#vocabularies'

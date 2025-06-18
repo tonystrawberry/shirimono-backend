@@ -36,4 +36,19 @@ class UserCourseLevelKanji < ApplicationRecord
 
   validates :user_course_level_kanji_links_count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  # Update the status based on the `user_course_level_kanji_links_count`
+  # @return [void]
+  def update_status!
+    if user_course_level_kanji_links_count == course_level_kanji.kanjis_count
+      if user_course_level_kanji_links.pluck(:status).all?(:completed)
+        update!(status: :completed)
+      else
+        update!(status: :all_in_progress)
+      end
+    elsif user_course_level_kanji_links_count > 0
+      update!(status: :partially_in_progress)
+    else
+      update!(status: :not_started)
+    end
+  end
 end
