@@ -6,20 +6,20 @@ module Api
 
       def index
         @user_review_kanjis = UserReviewKanji
-          .joins(user_course_level_kanji: { user_course_level: :user_course })
-          .where(user_course_level_kanji: { user_course_level: { user_courses: { user_id: current_user.id } } })
+          .joins(user_course_level_kanji_link: { user_course_level_kanji: :user_course })
+          .where(user_course_level_kanji_link: { user_course_level_kanji: { user_courses: { user_id: current_user.id } } })
           .order(next_review_at: :asc)
           .decorate
 
         @user_review_vocabularies = UserReviewVocabulary
-          .joins(user_course_level_vocabulary: { user_course_level: :user_course })
-          .where(user_course_level_vocabulary: { user_course_level: { user_courses: { user_id: current_user.id } } })
+          .joins(user_course_level_vocabulary_link: { user_course_level_vocabulary: :user_course })
+          .where(user_course_level_vocabulary_link: { user_course_level_vocabulary: { user_courses: { user_id: current_user.id } } })
           .order(next_review_at: :asc)
           .decorate
 
         @user_review_grammars = UserReviewGrammar
-          .joins(user_course_level_grammar: { user_course_level: :user_course })
-          .where(user_course_level_grammar: { user_course_level: { user_courses: { user_id: current_user.id } } })
+          .joins(user_course_level_grammar_link: { user_course_level_grammar: :user_course })
+          .where(user_course_level_grammar_link: { user_course_level_grammar: { user_courses: { user_id: current_user.id } } })
           .order(next_review_at: :asc)
           .decorate
       end

@@ -27,7 +27,7 @@
 #  fk_rails_...  (vocabulary_id => vocabularies.id)
 #
 class UserReviewVocabulary < ApplicationRecord
-  belongs_to :user_course_level_vocabulary
+  belongs_to :user_course_level_vocabulary_link
   belongs_to :vocabulary_exercise
   belongs_to :vocabulary
 
@@ -46,5 +46,5 @@ class UserReviewVocabulary < ApplicationRecord
   validates :number_of_total_reviews, presence: true
   validates :number_of_correct_reviews, presence: true
 
-  counter_culture :user_course_level_vocabulary
+  counter_culture :user_course_level_vocabulary_link
 end

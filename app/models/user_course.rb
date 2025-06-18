@@ -25,11 +25,12 @@ class UserCourse < ApplicationRecord
   belongs_to :user
   belongs_to :course
 
-  has_many :user_course_levels, dependent: :destroy
-  has_many :course_levels, through: :user_course_levels
-  has_many :user_course_level_kanjis, through: :user_course_levels
-  has_many :user_course_level_grammars, through: :user_course_levels
-  has_many :user_course_level_vocabularies, through: :user_course_levels
+  has_many :user_course_level_kanjis, dependent: :destroy
+  has_many :course_level_kanjis, through: :user_course_level_kanjis
+  has_many :user_course_level_grammars, dependent: :destroy
+  has_many :course_level_grammars, through: :user_course_level_grammars
+  has_many :user_course_level_vocabularies, dependent: :destroy
+  has_many :course_level_vocabularies, through: :user_course_level_vocabularies
 
   # Return the number of kanjis that the user has reviewed
   # @return [Integer] The number of kanjis that the user has reviewed

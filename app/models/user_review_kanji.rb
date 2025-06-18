@@ -27,7 +27,7 @@
 #  fk_rails_...  (user_course_level_kanji_link_id => user_course_level_kanji_links.id)
 #
 class UserReviewKanji < ApplicationRecord
-  belongs_to :user_course_level_kanji
+  belongs_to :user_course_level_kanji_link
   belongs_to :kanji_exercise
   belongs_to :kanji
 
@@ -46,5 +46,5 @@ class UserReviewKanji < ApplicationRecord
   validates :number_of_total_reviews, presence: true
   validates :number_of_correct_reviews, presence: true
 
-  counter_culture :user_course_level_kanji
+  counter_culture :user_course_level_kanji_link
 end

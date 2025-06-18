@@ -5,7 +5,7 @@ class CreateUserCourseLevelVocabularyLinks < ActiveRecord::Migration[8.0]
       t.references :course_level_vocabulary_link, null: false, foreign_key: true, comment: "CourseLevelVocabulary that the vocabulary belongs to"
 
       t.integer :status, null: false, default: 0, comment: "Status of the user course level vocabulary (e.g. not_started, partially_in_progress, all_in_progress, completed)"
-      t.integer :user_reviews_vocabularies_count, null: false, default: 0, comment: "Number of user reviews for the user course level vocabulary"
+      t.integer :user_review_vocabularies_count, null: false, default: 0, comment: "Number of user reviews for the user course level vocabulary"
 
       t.timestamps
     end

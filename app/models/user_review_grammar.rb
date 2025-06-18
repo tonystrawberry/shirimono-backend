@@ -27,7 +27,7 @@
 #  fk_rails_...  (user_course_level_grammar_link_id => user_course_level_grammar_links.id)
 #
 class UserReviewGrammar < ApplicationRecord
-  belongs_to :user_course_level_grammar
+  belongs_to :user_course_level_grammar_link
   belongs_to :grammar_exercise
   belongs_to :grammar
 
@@ -46,5 +46,5 @@ class UserReviewGrammar < ApplicationRecord
   validates :number_of_total_reviews, presence: true
   validates :number_of_correct_reviews, presence: true
 
-  counter_culture :user_course_level_grammar
+  counter_culture :user_course_level_grammar_link
 end

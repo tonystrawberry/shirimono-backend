@@ -45,7 +45,6 @@ class GrammarExercise < ApplicationRecord
   validates :exercise_type, presence: true, inclusion: { in: exercise_types.keys }
   validates :question_types, presence: true
   validates :accepted_answers, presence: true
-  validates :wrong_answers, presence: true
   validates :unlock_mastery_level, presence: true, inclusion: { in: unlock_mastery_levels.keys }
 
   validate :ensure_answers_are_not_empty
@@ -53,14 +52,10 @@ class GrammarExercise < ApplicationRecord
   private
 
   # Called on :validate.
-  # Ensure that the accepted_answers and wrong_answers arrays are not empty.
+  # Ensure that the accepted_answers array is not empty.
   def ensure_answers_are_not_empty
     if accepted_answers.blank? || accepted_answers.reject(&:blank?).empty?
       errors.add(:accepted_answers, "must have at least one non-empty answer")
-    end
-
-    if wrong_answers.blank? || wrong_answers.reject(&:blank?).empty?
-      errors.add(:wrong_answers, "must have at least one non-empty answer")
     end
   end
 end

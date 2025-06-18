@@ -13,8 +13,7 @@
 #
 # Indexes
 #
-#  index_vocabularies_on_slug   (slug) UNIQUE
-#  index_vocabularies_on_title  (title) UNIQUE
+#  index_vocabularies_on_slug  (slug) UNIQUE
 #
 class Vocabulary < ApplicationRecord
   translates :meanings

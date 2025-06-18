@@ -24,6 +24,8 @@ class CourseLevelVocabularyLink < ApplicationRecord
   belongs_to :course_level_vocabulary
   belongs_to :vocabulary
 
-  validates :course_level_id, uniqueness: { scope: :vocabulary_id }
+  has_many :user_course_level_vocabulary_links, dependent: :destroy
+
+  validates :course_level_vocabulary_id, uniqueness: { scope: :vocabulary_id }
   validates :is_published, inclusion: { in: [true, false] }
 end

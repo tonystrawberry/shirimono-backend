@@ -3,8 +3,8 @@
 # Table name: user_course_level_kanji_links
 #
 #  id                                                                                                                  :bigint           not null, primary key
-#  status(Status of the user course level kanji (e.g. not_started, partially_in_progress, all_in_progress, completed)) :integer          default(0), not null
-#  user_reviews_kanjis_count(Number of user reviews for the user course level kanji)                                   :integer          default(0), not null
+#  status(Status of the user course level kanji (e.g. not_started, partially_in_progress, all_in_progress, completed)) :integer          default("not_started"), not null
+#  user_review_kanjis_count(Number of user reviews for the user course level kanji)                                    :integer          default(0), not null
 #  created_at                                                                                                          :datetime         not null
 #  updated_at                                                                                                          :datetime         not null
 #  course_level_kanji_link_id(CourseLevelKanji that the kanji belongs to)                                              :bigint           not null

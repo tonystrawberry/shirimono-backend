@@ -11,8 +11,7 @@
 #
 # Indexes
 #
-#  index_grammars_on_slug   (slug) UNIQUE
-#  index_grammars_on_title  (title) UNIQUE
+#  index_grammars_on_slug  (slug) UNIQUE
 #
 class Grammar < ApplicationRecord
   translates :meanings

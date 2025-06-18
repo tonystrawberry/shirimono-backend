@@ -25,11 +25,11 @@ class CourseLevelKanji < ApplicationRecord
 
   belongs_to :course
 
-  has_many :course_level_kanjis, dependent: :destroy
-  has_many :kanjis, through: :course_level_kanjis
+  has_many :course_level_kanji_links, dependent: :destroy
+  has_many :kanjis, through: :course_level_kanji_links
   has_many :kanji_exercises, through: :kanjis
   has_many :user_course_level_kanjis, dependent: :destroy
-  has_many :user_courses, through: :user_course_level_kanjis
+  has_many :user_courses, through: :user_course_level_kanji_links
 
   validates :title, presence: true
   validates :kanjis_count, presence: true, numericality: { greater_than_or_equal_to: 0 }

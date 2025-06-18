@@ -24,6 +24,8 @@ class CourseLevelKanjiLink < ApplicationRecord
   belongs_to :course_level_kanji
   belongs_to :kanji
 
-  validates :course_level_id, uniqueness: { scope: :kanji_id }
+  has_many :user_course_level_kanji_links, dependent: :destroy
+
+  validates :course_level_kanji_id, uniqueness: { scope: :kanji_id }
   validates :is_published, inclusion: { in: [true, false] }
 end

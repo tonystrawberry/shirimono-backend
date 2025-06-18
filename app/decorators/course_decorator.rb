@@ -2,15 +2,15 @@ class CourseDecorator < Draper::Decorator
   delegate_all
 
   def course_level_kanjis_count
-    object.course_levels.where(point_type: :kanji).count
+    object.course_level_kanjis.count
   end
 
   def course_level_vocabularies_count
-    object.course_levels.where(point_type: :vocabulary).count
+    object.course_level_vocabularies.count
   end
 
   def course_level_grammars_count
-    object.course_levels.where(point_type: :grammar).count
+    object.course_level_grammars.count
   end
 
   def progress

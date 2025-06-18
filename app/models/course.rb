@@ -14,13 +14,15 @@
 class Course < ApplicationRecord
   translates :title
 
-  has_many :course_levels, dependent: :destroy
-  has_many :course_level_kanjis, through: :course_levels
-  has_many :kanjis, through: :course_level_kanjis
-  has_many :course_level_vocabularies, through: :course_levels
-  has_many :vocabularies, through: :course_level_vocabularies
-  has_many :course_level_grammars, through: :course_levels
-  has_many :grammars, through: :course_level_grammars
+  has_many :course_level_kanjis, dependent: :destroy
+  has_many :course_level_kanji_links, through: :course_level_kanjis
+  has_many :kanjis, through: :course_level_kanji_links
+  has_many :course_level_vocabularies, dependent: :destroy
+  has_many :course_level_vocabulary_links, through: :course_level_vocabularies
+  has_many :vocabularies, through: :course_level_vocabulary_links
+  has_many :course_level_grammars, dependent: :destroy
+  has_many :course_level_grammar_links, through: :course_level_grammars
+  has_many :grammars, through: :course_level_grammar_links
   has_many :user_courses, dependent: :destroy
   has_many :users, through: :user_courses
 

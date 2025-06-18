@@ -3,8 +3,8 @@
 # Table name: user_course_level_vocabulary_links
 #
 #  id                                                                                                                       :bigint           not null, primary key
-#  status(Status of the user course level vocabulary (e.g. not_started, partially_in_progress, all_in_progress, completed)) :integer          default(0), not null
-#  user_reviews_vocabularies_count(Number of user reviews for the user course level vocabulary)                             :integer          default(0), not null
+#  status(Status of the user course level vocabulary (e.g. not_started, partially_in_progress, all_in_progress, completed)) :integer          default("not_started"), not null
+#  user_review_vocabularies_count(Number of user reviews for the user course level vocabulary)                              :integer          default(0), not null
 #  created_at                                                                                                               :datetime         not null
 #  updated_at                                                                                                               :datetime         not null
 #  course_level_vocabulary_link_id(CourseLevelVocabulary that the vocabulary belongs to)                                    :bigint           not null
@@ -21,4 +21,17 @@
 #  fk_rails_...  (user_course_level_vocabulary_id => user_course_level_vocabularies.id)
 #
 class UserCourseLevelVocabularyLink < ApplicationRecord
+  belongs_to :course_level_vocabulary_link
+  belongs_to :user_course_level_vocabulary
+
+  has_many :user_review_vocabulary_links, dependent: :destroy
+
+  enum :status, {
+    not_started: 0,
+    partially_in_progress: 1,
+    all_in_progress: 2,
+    completed: 3
+  }, prefix: true
+
+  counter_culture :user_course_level_vocabulary
 end

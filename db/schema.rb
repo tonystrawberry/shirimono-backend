@@ -266,7 +266,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.bigint "user_course_level_grammar_id", null: false, comment: "UserCourseLevelGrammar that the grammar belongs to"
     t.bigint "course_level_grammar_link_id", null: false, comment: "CourseLevelGrammar that the grammar belongs to"
     t.integer "status", default: 0, null: false, comment: "Status of the user course level grammar (e.g. not_started, partially_in_progress, all_in_progress, completed)"
-    t.integer "user_reviews_grammars_count", default: 0, null: false, comment: "Number of user reviews for the user course level grammar"
+    t.integer "user_review_grammars_count", default: 0, null: false, comment: "Number of user reviews for the user course level grammar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_grammar_link_id"], name: "idx_on_course_level_grammar_link_id_5fcd607a06"
@@ -277,7 +277,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.bigint "user_course_id", null: false, comment: "UserCourse that the grammar belongs to"
     t.bigint "course_level_grammar_id", null: false, comment: "CourseLevelGrammar that the grammar belongs to"
     t.integer "status", default: 0, null: false, comment: "Status of the user course level grammar (e.g. not_started, partially_in_progress, all_in_progress, completed)"
-    t.integer "user_reviews_grammars_count", default: 0, null: false, comment: "Number of user reviews for the user course level grammar"
+    t.integer "user_course_level_grammar_links_count", default: 0, null: false, comment: "Number of user reviews for the user course level grammar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_grammar_id"], name: "index_user_course_level_grammars_on_course_level_grammar_id"
@@ -288,7 +288,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.bigint "user_course_level_kanji_id", null: false, comment: "UserCourseLevelKanji that the kanji belongs to"
     t.bigint "course_level_kanji_link_id", null: false, comment: "CourseLevelKanji that the kanji belongs to"
     t.integer "status", default: 0, null: false, comment: "Status of the user course level kanji (e.g. not_started, partially_in_progress, all_in_progress, completed)"
-    t.integer "user_reviews_kanjis_count", default: 0, null: false, comment: "Number of user reviews for the user course level kanji"
+    t.integer "user_review_kanjis_count", default: 0, null: false, comment: "Number of user reviews for the user course level kanji"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_kanji_link_id"], name: "idx_on_course_level_kanji_link_id_eec815e419"
@@ -299,7 +299,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.bigint "user_course_id", null: false, comment: "UserCourse that the kanji belongs to"
     t.bigint "course_level_kanji_id", null: false, comment: "CourseLevelKanji that the kanji belongs to"
     t.integer "status", default: 0, null: false, comment: "Status of the user course level kanji (e.g. not_started, partially_in_progress, all_in_progress, completed)"
-    t.integer "user_reviews_kanjis_count", default: 0, null: false, comment: "Number of user reviews for the user course level kanji"
+    t.integer "user_course_level_kanji_links_count", default: 0, null: false, comment: "Number of user reviews for the user course level kanji"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_kanji_id"], name: "index_user_course_level_kanjis_on_course_level_kanji_id"
@@ -310,7 +310,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.bigint "user_course_id", null: false, comment: "UserCourse that the vocabulary belongs to"
     t.bigint "course_level_vocabulary_id", null: false, comment: "CourseLevelVocabulary that the vocabulary belongs to"
     t.integer "status", default: 0, null: false, comment: "Status of the user course level vocabulary (e.g. not_started, partially_in_progress, all_in_progress, completed)"
-    t.integer "user_reviews_vocabularies_count", default: 0, null: false, comment: "Number of user reviews for the user course level vocabulary"
+    t.integer "user_course_level_vocabulary_links_count", default: 0, null: false, comment: "Number of user reviews for the user course level vocabulary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_vocabulary_id"], name: "idx_on_course_level_vocabulary_id_4be51d041d"
@@ -321,7 +321,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.bigint "user_course_level_vocabulary_id", null: false, comment: "UserCourseLevelVocabulary that the vocabulary belongs to"
     t.bigint "course_level_vocabulary_link_id", null: false, comment: "CourseLevelVocabulary that the vocabulary belongs to"
     t.integer "status", default: 0, null: false, comment: "Status of the user course level vocabulary (e.g. not_started, partially_in_progress, all_in_progress, completed)"
-    t.integer "user_reviews_vocabularies_count", default: 0, null: false, comment: "Number of user reviews for the user course level vocabulary"
+    t.integer "user_review_vocabularies_count", default: 0, null: false, comment: "Number of user reviews for the user course level vocabulary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_vocabulary_link_id"], name: "idx_on_course_level_vocabulary_link_id_e343d47419"
