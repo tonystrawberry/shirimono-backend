@@ -9,5 +9,7 @@ class CreateUserCourseLevelGrammarLinks < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+
+    add_index :user_course_level_grammar_links, [:user_course_level_grammar_id, :course_level_grammar_link_id], unique: true, name: "index_user_course_level_grammar_links_unique"
   end
 end

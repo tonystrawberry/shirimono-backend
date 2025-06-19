@@ -9,5 +9,7 @@ class CreateUserCourseLevelKanjiLinks < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+
+    add_index :user_course_level_kanji_links, [:user_course_level_kanji_id, :course_level_kanji_link_id], unique: true, name: "index_user_course_level_kanji_links_unique"
   end
 end

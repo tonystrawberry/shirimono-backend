@@ -14,6 +14,7 @@
 #
 #  idx_on_course_level_vocabulary_link_id_e343d47419  (course_level_vocabulary_link_id)
 #  idx_on_user_course_level_vocabulary_id_055b117a25  (user_course_level_vocabulary_id)
+#  index_user_course_level_vocabulary_links_unique    (user_course_level_vocabulary_id,course_level_vocabulary_link_id) UNIQUE
 #
 # Foreign Keys
 #

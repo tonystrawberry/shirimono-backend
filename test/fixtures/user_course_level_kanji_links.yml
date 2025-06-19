@@ -20,6 +20,7 @@
 #
 #  idx_on_course_level_kanji_link_id_eec815e419  (course_level_kanji_link_id)
 #  idx_on_user_course_level_kanji_id_53e28fc233  (user_course_level_kanji_id)
+#  index_user_course_level_kanji_links_unique    (user_course_level_kanji_id,course_level_kanji_link_id) UNIQUE
 #
 # Foreign Keys
 #

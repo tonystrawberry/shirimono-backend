@@ -34,12 +34,6 @@ module Api
           point_exercise_id: params[:point_exercise_id]
         )
 
-        puts "course_slug: #{params[:course_slug]}"
-        puts "course_point_type: #{params[:course_point_type]}"
-        puts "course_point_id: #{params[:course_point_id]}"
-        puts "point_exercise_type: #{params[:point_exercise_type]}"
-        puts "point_exercise_id: #{params[:point_exercise_id]}"
-
         @user_review = service.correct_review
 
         point_type = case @user_review.course_point_type

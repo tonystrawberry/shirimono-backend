@@ -10,4 +10,16 @@ class CourseLevelKanjiDecorator < Draper::Decorator
   #     end
   #   end
 
+  def points
+    object.kanjis.map do |kanji|
+      {
+        id: kanji.id,
+        title: kanji.title,
+        meanings: kanji.meanings,
+        kunyomi_readings: kanji.kunyomi_readings,
+        onyomi_readings: kanji.onyomi_readings,
+        exercises: kanji.kanji_exercises.map { |exercise| { id: exercise.id } },
+      }
+    end
+  end
 end

@@ -14,6 +14,7 @@
 #
 #  index_user_course_level_kanjis_on_course_level_kanji_id  (course_level_kanji_id)
 #  index_user_course_level_kanjis_on_user_course_id         (user_course_id)
+#  index_user_course_level_kanjis_unique                    (user_course_id,course_level_kanji_id) UNIQUE
 #
 # Foreign Keys
 #

@@ -10,4 +10,14 @@ class CourseLevelVocabularyDecorator < Draper::Decorator
   #     end
   #   end
 
+  def points
+    object.vocabularies.map do |vocabulary|
+      {
+        id: vocabulary.id,
+        title: vocabulary.title,
+        meanings: vocabulary.meanings,
+        exercises: vocabulary.vocabulary_exercises.map { |exercise| { id: exercise.id } }
+      }
+    end
+  end
 end

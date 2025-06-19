@@ -17,17 +17,17 @@ module Api
 
         case point_type
         when :kanji
-          @user_course_levels = @user_course.user_course_level_kanjis.decorate
           @course_levels = @course.course_level_kanjis.order(:position).decorate
-          @user_reviews = current_user.user_reviews.where(course_point_type: "CourseLevelKanji").decorate
+          @user_course_levels = @user_course&.user_course_level_kanjis&.decorate || []
+          @user_reviews = current_user.user_review_kanjis.decorate
         when :vocabulary
-          @user_course_levels = @user_course.user_course_level_vocabularies.decorate
           @course_levels = @course.course_level_vocabularies.order(:position).decorate
-          @user_reviews = current_user.user_reviews.where(course_point_type: "CourseLevelVocabulary").decorate
+          @user_course_levels = @user_course&.user_course_level_vocabularies&.decorate || []
+          @user_reviews = current_user.user_review_vocabularies.decorate
         when :grammar
-          @user_course_levels = @user_course.user_course_level_grammars.decorate
           @course_levels = @course.course_level_grammars.order(:position).decorate
-          @user_reviews = current_user.user_reviews.where(course_point_type: "CourseLevelGrammar").decorate
+          @user_course_levels = @user_course&.user_course_level_grammars&.decorate || []
+          @user_reviews = current_user.user_review_grammars.decorate
         end
       end
     end

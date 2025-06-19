@@ -10,4 +10,14 @@ class CourseLevelGrammarDecorator < Draper::Decorator
   #     end
   #   end
 
+  def points
+    object.grammars.map do |grammar|
+      {
+        id: grammar.id,
+        title: grammar.title,
+        meanings: grammar.meanings,
+        exercises: grammar.grammar_exercises.map { |exercise| { id: exercise.id } }
+      }
+    end
+  end
 end

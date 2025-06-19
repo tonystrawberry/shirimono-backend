@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :user_courses, dependent: :destroy
-  has_many :user_course_levels, through: :user_courses
-  has_many :user_reviews, through: :user_course_levels
+  has_many :user_course_level_kanjis, through: :user_courses
+  has_many :user_course_level_vocabularies, through: :user_courses
+  has_many :user_course_level_grammars, through: :user_courses
+  has_many :user_review_kanjis, through: :user_course_level_kanjis
+  has_many :user_review_vocabularies, through: :user_course_level_vocabularies
+  has_many :user_review_grammars, through: :user_course_level_grammars
 end

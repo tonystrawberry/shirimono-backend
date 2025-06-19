@@ -270,6 +270,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_grammar_link_id"], name: "idx_on_course_level_grammar_link_id_5fcd607a06"
+    t.index ["user_course_level_grammar_id", "course_level_grammar_link_id"], name: "index_user_course_level_grammar_links_unique", unique: true
     t.index ["user_course_level_grammar_id"], name: "idx_on_user_course_level_grammar_id_121196a159"
   end
 
@@ -281,6 +282,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_grammar_id"], name: "index_user_course_level_grammars_on_course_level_grammar_id"
+    t.index ["user_course_id", "course_level_grammar_id"], name: "index_user_course_level_grammars_unique", unique: true
     t.index ["user_course_id"], name: "index_user_course_level_grammars_on_user_course_id"
   end
 
@@ -292,6 +294,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_kanji_link_id"], name: "idx_on_course_level_kanji_link_id_eec815e419"
+    t.index ["user_course_level_kanji_id", "course_level_kanji_link_id"], name: "index_user_course_level_kanji_links_unique", unique: true
     t.index ["user_course_level_kanji_id"], name: "idx_on_user_course_level_kanji_id_53e28fc233"
   end
 
@@ -303,6 +306,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_kanji_id"], name: "index_user_course_level_kanjis_on_course_level_kanji_id"
+    t.index ["user_course_id", "course_level_kanji_id"], name: "index_user_course_level_kanjis_unique", unique: true
     t.index ["user_course_id"], name: "index_user_course_level_kanjis_on_user_course_id"
   end
 
@@ -314,6 +318,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_vocabulary_id"], name: "idx_on_course_level_vocabulary_id_4be51d041d"
+    t.index ["user_course_id", "course_level_vocabulary_id"], name: "index_user_course_level_vocabularies_unique", unique: true
     t.index ["user_course_id"], name: "index_user_course_level_vocabularies_on_user_course_id"
   end
 
@@ -325,6 +330,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_133222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_level_vocabulary_link_id"], name: "idx_on_course_level_vocabulary_link_id_e343d47419"
+    t.index ["user_course_level_vocabulary_id", "course_level_vocabulary_link_id"], name: "index_user_course_level_vocabulary_links_unique", unique: true
     t.index ["user_course_level_vocabulary_id"], name: "idx_on_user_course_level_vocabulary_id_055b117a25"
   end
 

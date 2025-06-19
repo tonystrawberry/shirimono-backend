@@ -20,6 +20,7 @@
 #
 #  idx_on_course_level_vocabulary_id_4be51d041d            (course_level_vocabulary_id)
 #  index_user_course_level_vocabularies_on_user_course_id  (user_course_id)
+#  index_user_course_level_vocabularies_unique             (user_course_id,course_level_vocabulary_id) UNIQUE
 #
 # Foreign Keys
 #

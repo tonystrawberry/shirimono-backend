@@ -14,6 +14,7 @@
 #
 #  idx_on_course_level_grammar_link_id_5fcd607a06  (course_level_grammar_link_id)
 #  idx_on_user_course_level_grammar_id_121196a159  (user_course_level_grammar_id)
+#  index_user_course_level_grammar_links_unique    (user_course_level_grammar_id,course_level_grammar_link_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -24,7 +25,7 @@ class UserCourseLevelGrammarLink < ApplicationRecord
   belongs_to :course_level_grammar_link
   belongs_to :user_course_level_grammar
 
-  has_many :user_review_grammar_links, dependent: :destroy
+  has_many :user_review_grammars, dependent: :destroy
 
   enum :status, {
     not_started: 0,

@@ -9,5 +9,7 @@ class CreateUserCourseLevelVocabularyLinks < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+
+    add_index :user_course_level_vocabulary_links, [:user_course_level_vocabulary_id, :course_level_vocabulary_link_id], unique: true, name: "index_user_course_level_vocabulary_links_unique"
   end
 end
