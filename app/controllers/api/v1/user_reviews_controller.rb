@@ -26,30 +26,23 @@ module Api
 
       # POST /api/v1/user_reviews/correct_review
       def correct_review
+        puts "course_slug: #{params[:course_slug]}"
+        puts "level: #{params[:position]}"
+        puts "point_exercise_type: #{params[:point_exercise_type]}"
+        puts "point_exercise_id: #{params[:point_exercise_id]}"
+
         service = UserReviews::UpdateService.new(
           user: current_user,
           course_slug: params[:course_slug],
-          level: params[:level],
+          position: params[:position],
           point_exercise_type: params[:point_exercise_type],
           point_exercise_id: params[:point_exercise_id]
         )
 
-        @user_review = service.correct_review
+        @user_review = service.correct_review.decorate
 
-        point_type = case @user_review.course_point_type
-                    when 'CourseLevelKanji' then 'kanji'
-                    when 'CourseLevelVocabulary' then 'vocabulary'
-                    when 'CourseLevelGrammar' then 'grammar'
-                    end
-
-
-
-        UserCourseLevels::UpdateStatusService.new(user: current_user, course_slug: params[:course_slug], point_type: point_type).call
-
-        puts "course: #{Course.find_by(slug: params[:course_slug]).inspect}"
-        puts "type: #{point_type}"
-
-        UserCourseLevels::InitializeUserCourseLevelsService.new(user: current_user, course: Course.find_by(slug: params[:course_slug]), type: point_type).call
+        UserCourseLevels::UpdateStatusService.new(user: current_user, course_slug: params[:course_slug], point_type: params[:point_exercise_type]).call
+        # UserCourseLevels::InitializeUserCourseLevelsService.new(user: current_user, course: Course.find_by(slug: params[:course_slug]), type: params[:point_exercise_type]).call
 
         render :show
       rescue ActiveRecord::RecordNotFound
@@ -63,13 +56,13 @@ module Api
         service = UserReviews::UpdateService.new(
           user: current_user,
           course_slug: @user_review.user_course_level.user_course.course.slug,
-          course_point_type: @user_review.course_point_type,
-          course_point_id: @user_review.course_point_id,
+          position: @user_review.user_course_level.position,
           point_exercise_type: @user_review.point_exercise_type,
           point_exercise_id: @user_review.point_exercise_id
         )
 
-        @user_review = service.incorrect_review(@user_review)
+        @user_review = service.incorrect_review(@user_review).decorate
+
         render :show
       rescue ActiveRecord::RecordInvalid => e
         render json: { error: e.message }, status: :unprocessable_entity

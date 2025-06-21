@@ -6,10 +6,8 @@ json.course_level do
 end
 
 json.grammars @grammars do |grammar|
-  # Get exercises for this grammar
   grammar_exercises = @grammar_exercises.select { |ex| grammar.id == ex.grammar_id }
 
-  # Only include this grammar if it has unreviewed exercises
   if grammar_exercises.present?
     json.extract! grammar, :id, :title, :slug
     json.meanings grammar.meanings

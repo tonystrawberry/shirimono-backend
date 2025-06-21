@@ -29,10 +29,11 @@ class UserCourseLevelGrammar < ApplicationRecord
   has_many :user_review_grammars, through: :user_course_level_grammar_links
 
   enum :status, {
-    not_started: 0,
-    partially_in_progress: 1,
-    all_in_progress: 2,
-    completed: 3
+    not_ready: 0,
+    ready: 1,
+    partially_in_progress: 2,
+    all_in_progress: 3,
+    completed: 4
   }, prefix: true
 
   delegate :course, to: :user_course

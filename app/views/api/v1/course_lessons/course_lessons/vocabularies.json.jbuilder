@@ -6,10 +6,8 @@ json.course_level do
 end
 
 json.vocabularies @vocabularies do |vocabulary|
-  # Get exercises for this vocabulary
   vocabulary_exercises = @vocabulary_exercises.select { |ex| vocabulary.id == ex.vocabulary_id }
 
-  # Only include this vocabulary if it has unreviewed exercises
   if vocabulary_exercises.present?
     json.extract! vocabulary, :id, :title, :slug, :kana, :types
     json.meanings vocabulary.meanings
