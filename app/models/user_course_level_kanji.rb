@@ -37,6 +37,8 @@ class UserCourseLevelKanji < ApplicationRecord
 
   validates :user_course_level_kanji_links_count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  delegate :course, to: :user_course
+
   # Update the status based on the `user_course_level_kanji_links_count`
   # @return [void]
   def update_status!

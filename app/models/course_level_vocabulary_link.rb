@@ -30,4 +30,6 @@ class CourseLevelVocabularyLink < ApplicationRecord
   validates :is_published, inclusion: { in: [true, false] }
 
   counter_culture :course_level_vocabulary
+
+  delegate :course, to: :course_level_vocabulary
 end

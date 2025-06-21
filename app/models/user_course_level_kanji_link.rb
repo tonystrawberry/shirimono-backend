@@ -35,4 +35,7 @@ class UserCourseLevelKanjiLink < ApplicationRecord
   }, prefix: true
 
   counter_culture :user_course_level_kanji
+
+  delegate :course, to: :course_level_kanji_link
+  delegate :course_level_kanji, to: :course_level_kanji_link
 end

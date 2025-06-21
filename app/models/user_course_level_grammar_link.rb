@@ -35,4 +35,7 @@ class UserCourseLevelGrammarLink < ApplicationRecord
   }, prefix: true
 
   counter_culture :user_course_level_grammar
+
+  delegate :course, to: :course_level_grammar_link
+  delegate :course_level_grammar, to: :course_level_grammar_link
 end

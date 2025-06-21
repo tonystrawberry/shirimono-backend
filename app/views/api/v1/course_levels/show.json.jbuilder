@@ -3,10 +3,9 @@ json.course_level do
   json.title @course_level.title
   json.description @course_level.description
   json.position @course_level.position
-  json.point_type @point_type
 
-  case @point_type
-  when :kanji
+  case params[:point_type]
+  when "kanji"
     json.kanjis @points.select { |kanji| kanji.kanji_exercises.present? } do |kanji|
       json.id kanji.id
       json.title kanji.title
@@ -36,7 +35,7 @@ json.course_level do
         json.translation sentence.translation
       end
     end
-  when :vocabulary
+  when "vocabulary"
     json.vocabularies @points.select { |vocabulary| vocabulary.vocabulary_exercises.present? } do |vocabulary|
       json.id vocabulary.id
       json.title vocabulary.title
@@ -74,7 +73,7 @@ json.course_level do
         json.translation sentence.translation
       end
     end
-  when :grammar
+  when "grammar"
     json.grammars @points.select { |grammar| grammar.grammar_exercises.present? } do |grammar|
       json.id grammar.id
       json.title grammar.title

@@ -35,6 +35,8 @@ class UserCourseLevelVocabulary < ApplicationRecord
     completed: 3
   }, prefix: true
 
+  delegate :course, to: :user_course
+
   # Update the status based on the `user_course_level_vocabulary_links_count`
   # @return [void]
   def update_status!

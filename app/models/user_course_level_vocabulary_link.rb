@@ -35,4 +35,7 @@ class UserCourseLevelVocabularyLink < ApplicationRecord
   }, prefix: true
 
   counter_culture :user_course_level_vocabulary
+
+  delegate :course, to: :course_level_vocabulary_link
+  delegate :course_level_vocabulary, to: :course_level_vocabulary_link
 end

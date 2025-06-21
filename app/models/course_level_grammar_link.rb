@@ -30,4 +30,6 @@ class CourseLevelGrammarLink < ApplicationRecord
   validates :is_published, inclusion: { in: [true, false] }
 
   counter_culture :course_level_grammar
+
+  delegate :course, to: :course_level_grammar
 end

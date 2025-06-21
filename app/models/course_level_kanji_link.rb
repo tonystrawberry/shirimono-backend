@@ -30,4 +30,6 @@ class CourseLevelKanjiLink < ApplicationRecord
   validates :is_published, inclusion: { in: [true, false] }
 
   counter_culture :course_level_kanji
+
+  delegate :course, to: :course_level_kanji
 end
