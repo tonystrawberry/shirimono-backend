@@ -34,6 +34,7 @@ Rails.application.routes.draw do
         collection do
           post :correct_review
           post :incorrect_review
+          get :due_reviews
         end
       end
 

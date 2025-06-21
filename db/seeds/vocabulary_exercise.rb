@@ -16,7 +16,7 @@ Vocabulary.find_each do |vocabulary|
   wrong_meanings = (all_meanings - (vocabulary.meanings || [])).sample(2)
   VocabularyExercise.find_or_create_by!(vocabulary: vocabulary, exercise_type: :meaning, question: "#{vocabulary.title}") do |exercise|
     exercise.question_types = [:text]
-    exercise.accepted_answers = [vocabulary.meanings]
+    exercise.accepted_answers = vocabulary.meanings
     exercise.wrong_answers = wrong_meanings
     exercise.unlock_mastery_level = :beginner
   end

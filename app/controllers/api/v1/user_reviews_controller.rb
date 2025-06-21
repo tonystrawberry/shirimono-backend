@@ -68,6 +68,13 @@ module Api
         render json: { error: e.message }, status: :unprocessable_entity
       end
 
+      # GET /api/v1/user_reviews/due_reviews
+      def due_reviews
+        @user_review_kanjis = current_user.user_review_kanjis.where(next_review_at: ..Time.current).includes(kanji_exercise: :kanji).decorate
+        @user_review_vocabularies = UserReviewVocabulary.where(next_review_at: ..Time.current).includes(vocabulary_exercise: :vocabulary).decorate
+        @user_review_grammars = UserReviewGrammar.where(next_review_at: ..Time.current).includes(grammar_exercise: :grammar).decorate
+      end
+
       private
 
       def set_user_review
