@@ -56,7 +56,7 @@ gem "devise", "~> 4.9"
 gem "globalize", "~> 7.0"
 
 gem "jbuilder", "~> 2.13"
-gem 'counter_culture', '~> 3.2'
+gem 'counter_culture', '~> 3.11'
 
 gem "array_enum", "~> 1.6"
 
