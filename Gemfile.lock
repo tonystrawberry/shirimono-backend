@@ -1,8 +1,10 @@
 GIT
   remote: https://github.com/tonystrawberry/annotaterb.git
-  revision: 4d9ba3f7f5e45411231658c551b78e284aaf96aa
+  revision: 42d0615b0ab1290aa941ca6e91bda9558a9d542e
   specs:
-    annotaterb (4.14.0)
+    annotaterb (4.17.0)
+      activerecord (>= 6.0.0)
+      activesupport (>= 6.0.0)
 
 GEM
   remote: https://rubygems.org/
